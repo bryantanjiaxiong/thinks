@@ -92,6 +92,13 @@
 		password = "";
 	}
 	
+	function showInstructionsPanel()
+	{
+		document.getElementById("levelpanel").innerHTML = "There are five elements in this game<br>(In the order of top to bottom and then left to right):<br>the CLEAR button<br>the DRAWING-BOARD<br>the REFERENCE-PICTURE<br>the PATTERN<br>and the MANEUVER<br><br>Your goal is to use the repetitive PATTERN to fill the DRAWING-BOARD to display the REFERENCE-PICTURE as exactly as it is<br><br>The MANEUVER is a tip as to what is allowed:<br><img src=\"byline.PNG\" alt=\"firstlevel\" height=\"30px\" width=\"75px\"><br>You can only fill squares adjacent to your previous square<br><br><img src=\"byjump.PNG\" alt=\"firstlevel\" height=\"30px\" width=\"75px\"><br>You can fill squares with infinite jumps<br><br><img src=\"jumponce.PNG\" alt=\"firstlevel\" height=\"30px\" width=\"75px\"><br>You can only jump once<br><br>There will be more but you will figure it out<br><br>Matching the REFERENCE-PICTURE will immediately send you to the next level";
+		
+		password = "";
+	}
+	
 	function byline(a)
 	{
 		document.getElementById(a).innerHTML = "<div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: white\"></div></div><div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: black\"></div></div><div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: black\"></div></div><div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: white\"></div></div>";
@@ -2270,6 +2277,11 @@
 		if(password == "sehnir") //12
 		{
 			showLevelPanel();
+		}
+		
+		if(password == "nirseh") //21
+		{
+			showInstructionsPanel();
 		}
 	}
 </script>
