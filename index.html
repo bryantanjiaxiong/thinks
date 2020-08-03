@@ -1635,22 +1635,16 @@
 		{
 			if(z[a][b] == 0)
 			{
-				if((i%5) == 4)
+				if((i%5) == 1 || (i%5) == 3 || (i%5) == 4)
 				{
 					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
 					z[a][b] = 2;
-					i = -1;
 				}
-				else if((i%2) == 0)
+				else if((i%5) == 0 || (i%5) == 2)
 				{
 					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
-					z[a][b] = 2;
-				}
-				else if((i%2) == 1)
-				{
-					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
 					z[a][b] = 1;
-				}		
+				}	
 			
 				i++;
 				
@@ -1662,22 +1656,16 @@
 		{
 			if(z[a][b] == 0 && ((a == (p-1) && b == q) || (a == (p+1) && b == q) || (b == (q-1) && a == p) || (b == (q+1) && a == p)))
 			{
-				if((i%5) == 4)
+				if((i%5) == 1 || (i%5) == 3 || (i%5) == 4)
 				{
 					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
 					z[a][b] = 2;
-					i = -1;
 				}
-				else if((i%2) == 0)
+				else if((i%5) == 0 || (i%5) == 2)
 				{
 					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
-					z[a][b] = 2;
-				}
-				else if((i%2) == 1)
-				{
-					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
 					z[a][b] = 1;
-				}		
+				}
 			
 				i++;
 				
