@@ -1,0 +1,2318 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"> 
+		<title>Think's</title>
+		<style type="text/css">
+			.circle {height: 30px; width: 30px; background-color: #d9b382; border: #d9b382 solid 1px; outline: none; border-radius: 50%; cursor: -webkit-grab; cursor: grab; margin-top: 5px;}
+			.circleInstructions {height: 24px; width: 24px; outline: none; border-radius: 50%;}
+			.levelbutton {background-color: white; height: 20px; width: 20px; outline: none; border-radius: 50%;}
+			#levelpanel {opacity: 1; transition: opacity 3s ease;}
+			#levelpanel:hover {opacity: 1;}
+			
+			#chessboard {
+							width: 84px;
+							height: 84px;
+							margin: 20px;
+							border: 2px solid #333;
+						}
+						
+			#picboard {
+							width: 84px;
+							height: 84px;
+							border: 2px solid #333;
+						}
+						
+			.beige		{
+							float: left;
+							width: 40px;
+							height: 40px;
+							background-color: #d9b382;
+							text-align:center;
+							display: table-cell;
+							vertical-align:middle;
+							border: 1px black solid;
+						}
+						
+			#bywhatboard {
+							width: 28px;
+							height: 28px;
+							border: 1px solid white;
+						}						
+			.bywhatbeige{
+							float: left;
+							width: 12px;
+							height: 12px;
+							background-color: #d9b382;
+							text-align:center;
+							display: table-cell;
+							vertical-align:middle;
+							border: 1px black solid;
+						}
+			.bywhatcircle {height: 9px; width: 9px; background-color: #d9b382; border: #d9b382 solid 1px; outline: none; border-radius: 50%; cursor: -webkit-grab; cursor: grab; margin-top: 0.5px; margin-left: 0.5px;}						
+		</style>
+	</head>
+	<body> 
+		<div id="replace0"><div align="center"><button style="margin-top: 300px;" onclick="levelOne()">Start Game</button></div></div>
+		<div style="display: grid; grid-template-columns: 4fr 4fr 1fr;"> 
+		<!-- <div style="display: grid; grid-template-columns: 1fr 1fr;" align="center"----- shitcode ------>
+			<div id="replace" align="center"></div>
+		
+			<div>
+				<div id="thepictureforimitation" align="center"></div>
+			
+				<!--<div style="padding: 10px; margin-top: 600px; align: center;"></div>-->
+			</div>
+			
+			<div id="levelpanel" style="align: right;"></div>
+		</div>	
+	</body>
+</html>
+<script>
+	var jumps;
+	
+	var havedone2 = -1, threeisdone = 0, havedone5 = -1, sixisdone = 0, havedone7 = -1, eightisdone = 0, havedone10 = -1, elevenisdone = 0;
+	var password = "";
+	var havejumped = 0;
+	
+	var p, q;
+	
+	let i;
+	var z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+
+	function showLevelPanel()
+	{
+		document.getElementById("levelpanel").innerHTML = "<table><tr><td><button id=\"1a\" class=\"levelbutton\" onclick=\"levelOneA()\"></button></td><td><button id=\"1b\" class=\"levelbutton\" onclick=\"levelOneB()\"></button></td></tr>"
+		+"<tr><td><button id=\"2a\" class=\"levelbutton\" onclick=\"levelTwoA()\"></button></td><td><button id=\"2ba\" class=\"levelbutton\" onclick=\"levelTwoBA()\"></button></td><td><button id=\"2bb\" class=\"levelbutton\" onclick=\"levelTwoBB()\"></button></td><td><button id=\"2bc\" class=\"levelbutton\" onclick=\"levelTwoBC()\"></button></td></tr>"
+		+"<tr><td><button id=\"4aa\" class=\"levelbutton\" onclick=\"levelFourAA()\"></button></td><td><button id=\"4ab\" class=\"levelbutton\" onclick=\"levelFourAB()\"></button></td><td><button id=\"4ba\" class=\"levelbutton\" onclick=\"levelFourBA()\"></button></td><td><button id=\"4bb\" class=\"levelbutton\" onclick=\"levelFourBB()\"></button></td></tr>"
+		+"<tr><td><button id=\"5a\" class=\"levelbutton\" onclick=\"levelFiveA()\"></button></td><td><button id=\"5b\" class=\"levelbutton\" onclick=\"levelFiveB()\"></button></td><td><button id=\"5c\" class=\"levelbutton\" onclick=\"levelFiveC()\"></button></td><td><button id=\"5d\" class=\"levelbutton\" onclick=\"levelFiveD()\"></button></td></tr>"
+		+"<tr><td><button id=\"7a\" class=\"levelbutton\" onclick=\"levelSevenA()\"></button></td><td><button id=\"7b\" class=\"levelbutton\" onclick=\"levelSevenB()\"></button></td><td><button id=\"7c\" class=\"levelbutton\" onclick=\"levelSevenC()\"></button></td><td><button id=\"7d\" class=\"levelbutton\" onclick=\"levelSevenD()\"></button></td><td><button id=\"7e\" class=\"levelbutton\" onclick=\"levelSevenE()\"></button></td></tr>"
+		+"<tr><td><button id=\"9a\" class=\"levelbutton\" onclick=\"levelNineA()\"></button></td><td><button id=\"9b\" class=\"levelbutton\" onclick=\"levelNineB()\"></button></td><td><button id=\"9c\" class=\"levelbutton\" onclick=\"levelNineC()\"></button></td></tr>"
+		+"<tr><td><button id=\"10a\" class=\"levelbutton\" onclick=\"levelTenA()\"></button></td><td><button id=\"10b\" class=\"levelbutton\" onclick=\"levelTenB()\"></button></td><td><button id=\"10c\" class=\"levelbutton\" onclick=\"levelTenC()\"></button></td><td><button id=\"10d\" class=\"levelbutton\" onclick=\"levelTenD()\"></button></td><td><button id=\"10e\" class=\"levelbutton\" onclick=\"levelTenE()\"></button></td><td><button id=\"10f\" class=\"levelbutton\" onclick=\"levelTenF()\"></button></td></tr>"
+		+"<tr><td><button id=\"12a\" class=\"levelbutton\" onclick=\"levelTwelveA()\"></button></td><td><button id=\"12b\" class=\"levelbutton\" onclick=\"levelTwelveB()\"></button></td><td><button id=\"12c\" class=\"levelbutton\" onclick=\"levelTwelveC()\"></button></td><td><button id=\"12d\" class=\"levelbutton\" onclick=\"levelTwelveD()\"></button></td></tr></table>";
+	
+		password = "";
+	}
+	
+	function showInstructionsPanel()
+	{
+		document.getElementById("levelpanel").innerHTML = "There are five elements in this game<br>(In the order of top to bottom and then left to right):<br>the CLEAR button<br>the DRAWING-BOARD<br>the REFERENCE-PICTURE<br>the PATTERN<br>and the MANEUVER<br><br>Your goal is to use the repetitive PATTERN to fill the DRAWING-BOARD to display the REFERENCE-PICTURE as exactly as it is<br><br>The MANEUVER is a tip as to what is allowed:<br><img src=\"byline.PNG\" alt=\"firstlevel\" height=\"30px\" width=\"75px\"><br>You can only fill squares adjacent to your previous square<br><br><img src=\"byjump.PNG\" alt=\"firstlevel\" height=\"30px\" width=\"75px\"><br>You can fill squares with infinite jumps<br><br><img src=\"jumponce.PNG\" alt=\"firstlevel\" height=\"30px\" width=\"75px\"><br>You can only jump once<br><br>There will be more but you will figure it out<br><br>Matching the REFERENCE-PICTURE will immediately send you to the next level";
+		
+		password = "";
+	}
+	
+	function byline(a)
+	{
+		document.getElementById(a).innerHTML = "<div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: white\"></div></div><div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: black\"></div></div><div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: black\"></div></div><div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: white\"></div></div>";
+	}
+	
+	function byjump(a)
+	{
+		document.getElementById(a).innerHTML = "<div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: white\"></div></div><div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: black\"></div></div><div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: black\"></div></div><div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: white\"></div></div>";
+	}	
+	
+	function levelOne()
+	{
+		showLevelPanel();
+		
+		let lvlone = Math.floor(Math.random() * 2);
+		
+		switch(lvlone)
+		{
+			case 0:
+				levelOneA();
+				break;
+			case 1:
+				levelOneB();
+				break;		
+		}
+	}	
+	
+	function levelOneA()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+		
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(101)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\" onclick=\"password1()\"></button><button class=\"circleInstructions\" style=\"background-color: black;\" onclick=\"password2()\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<2; x++)
+		{
+			for(var y=0; y<2; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBYLINE(" + x + "," + y + ", 101)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelOneB()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+		
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(102)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\" onclick=\"password1()\"></button><button class=\"circleInstructions\" style=\"background-color: black;\" onclick=\"password2()\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<2; x++)
+		{
+			for(var y=0; y<2; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBYJUMP(" + x + "," + y + ", 102)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelTwo()
+	{
+		let lvltwo; 
+		
+		lvltwo = Math.floor(Math.random() * 4);
+		
+		switch(lvltwo)
+		{
+			case 0:
+				levelTwoA();
+				break;
+			case 1:
+				levelTwoBA();
+				break;
+			case 2:
+				levelTwoBB();
+				break;	
+			case 3:
+				levelTwoBC();
+				break;
+		}
+		
+		havedone2 = lvltwo;
+	}
+	
+	function levelTwoA()
+	{
+		
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(201)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 126px; height: 126px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 126px; height: 126px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<3; x++)
+		{
+			for(var y=0; y<3; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBYLINE(" + x + "," + y + ", 201)\"></button></div>";
+			}	
+		}
+	}	
+	
+	function levelTwoBA()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(2021)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 126px; height: 126px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 126px; height: 126px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: ∞</div></div>";
+		
+		for(var x=0; x<3; x++)
+		{
+			for(var y=0; y<3; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBYJUMP(" + x + "," + y + ", 2021)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelTwoBB()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(2022)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 126px; height: 126px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 126px; height: 126px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: ∞</div></div>";
+		
+		for(var x=0; x<3; x++)
+		{
+			for(var y=0; y<3; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBYJUMP(" + x + "," + y + ", 2022)\"></button></div>";
+			}	
+		}
+	}	
+
+	function levelTwoBC()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(2023)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 126px; height: 126px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 126px; height: 126px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: ∞</div></div>";
+		
+		for(var x=0; x<3; x++)
+		{
+			for(var y=0; y<3; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBYJUMP(" + x + "," + y + ", 2023)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelThree()
+	{
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+		let lvlthree;
+		
+		do
+		{
+			lvlthree = Math.floor(Math.random() * 4);
+		}
+		while(lvlthree == havedone2)
+		
+		switch(lvlthree)
+		{
+			case 0:
+				levelTwoA();
+				break;
+			case 1:
+				levelTwoBA();
+				break;
+			case 2:
+				levelTwoBB();
+				break;	
+			case 3:
+				levelTwoBC();
+				break;
+		}
+		
+		threeisdone = 1;
+	}
+
+	function levelFour()
+	{
+		let lvlfour; 
+		
+		lvlfour = Math.floor(Math.random() * 2);
+		
+		switch(lvlfour)
+		{
+			case 0:
+				levelFourAA();
+				break;
+			case 1:
+				levelFourBA();
+				break;
+		}
+	}
+
+	function levelFourAA()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(4011)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceDoubleBYLINE(" + x + "," + y + ", 4011)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelFourAB()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(4012)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceDoubleBlackFirstBYLINE(" + x + "," + y + ", 4012)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelFourBA()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(4021)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceDoubleBlackFirstBYJUMP(" + x + "," + y + ", 4021)\"></button></div>";
+			}	
+		}
+	}
+
+	function levelFourBB()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(4022)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceDoubleBYJUMP(" + x + "," + y + ", 4022)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelFive()
+	{
+		let lvlfive; 
+		
+		lvlfive = Math.floor(Math.random() * 4);
+		
+		switch(lvlfive)
+		{
+			case 0:
+				levelFiveA();
+				break;
+			case 1:
+				levelFiveB();
+				break;
+			case 2:
+				levelFiveC();
+				break;
+			case 3:
+				levelFiveD();
+				break;				
+		}		
+		
+		havedone5 = lvlfive;
+	}	
+
+	function levelFiveA()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(501)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwice(" + x + "," + y + ", 501)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelFiveB()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(502)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwice(" + x + "," + y + ", 502)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelFiveC()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(503)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwice(" + x + "," + y + ", 503)\"></button></div>";
+			}	
+		}
+	}
+
+	function levelFiveD()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(504)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwice(" + x + "," + y + ", 504)\"></button></div>";
+			}	
+		}
+	}	
+	
+	function levelSix()
+	{
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		let lvlsix;
+	
+		do
+		{
+			lvlsix = Math.floor(Math.random() * 4);
+		}
+		while(lvlsix == havedone5)
+		
+		switch(lvlsix)
+		{
+			case 0:
+				levelFiveA();
+				break;
+			case 1:
+				levelFiveB();
+				break;
+			case 2:
+				levelFiveC();
+				break;	
+			case 3:
+				levelFiveD();
+				break;
+		}
+		
+		sixisdone = 1;
+	}
+
+	function levelSeven()
+	{
+		let lvlseven; 
+		
+		lvlseven = Math.floor(Math.random() * 5);
+		
+		switch(lvlseven)
+		{
+			case 0:
+				levelSevenA();
+				break;
+			case 1:
+				levelSevenB();
+				break;
+			case 2:
+				levelSevenC();
+				break;
+			case 3:
+				levelSevenD();
+				break;
+			case 4:
+				levelSevenE();
+				break;			
+		}		
+		
+		havedone7 = lvlseven;
+	}	
+
+	function levelSevenA()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(701)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 701)\"></button></div>";
+			}	
+		}
+	}
+
+	function levelSevenB()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(702)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 702)\"></button></div>";
+			}	
+		}
+	}		
+
+	function levelSevenC()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(703)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 703)\"></button></div>";
+			}	
+		}
+	}	
+
+	function levelSevenD()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(704)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 704)\"></button></div>";
+			}	
+		}
+	}	
+
+	function levelSevenE()
+	{
+		jumps = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(705)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 705)\"></button></div>";
+			}	
+		}
+	}		
+	
+	function levelEight()
+	{
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		let lvleight;
+	
+		do
+		{
+			lvleight = Math.floor(Math.random() * 5);
+		}
+		while(lvleight == havedone7)
+		
+		switch(lvleight)
+		{
+			case 0:
+				levelSevenA();
+				break;
+			case 1:
+				levelSevenB();
+				break;
+			case 2:
+				levelSevenC();
+				break;
+			case 3:
+				levelSevenD();
+				break;
+			case 4:
+				levelSevenE();
+				break;				
+		}
+		
+		eightisdone = 1;
+	}
+	
+	function levelNine()
+	{
+		let lvlnine; 
+		
+		lvlnine = Math.floor(Math.random() * 3);
+		
+		switch(lvlnine)
+		{
+			case 0:
+				levelNineA();
+				break;
+			case 1:
+				levelNineB();
+				break;
+			case 2:
+				levelNineC();
+				break;			
+		}
+	}	
+	
+	function levelNineA()
+	{
+		jumps = 1;
+		havejumped = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(901)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWBBWBYJUMPONCE(" + x + "," + y + ", 901)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelNineB()
+	{
+		jumps = 1;
+		havejumped = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(902)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWBBWBYJUMPONCE(" + x + "," + y + ", 902)\"></button></div>";
+			}	
+		}
+	}
+
+	function levelNineC()
+	{
+		jumps = 1;
+		havejumped = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(903)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 168px; height: 168px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
+		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<4; x++)
+		{
+			for(var y=0; y<4; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWBBWBYJUMPONCE(" + x + "," + y + ", 903)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelTen()
+	{
+		let lvlten;
+		
+		lvlten = Math.floor(Math.random() * 6);
+		
+		switch(lvlten)
+		{
+			case 0:
+				levelTenA();
+				break;
+			case 1:
+				levelTenB();
+				break;
+			case 2:
+				levelTenC();
+				break;	
+			case 3:
+				levelTenD();
+				break;	
+			case 4:
+				levelTenE();
+				break;	
+			case 5:
+				levelTenF();
+				break;					
+		}
+	}
+
+	function levelTenA()
+	{
+		jumps = 2;
+		havejumped = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(1001)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 210px; height: 210px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 210px; height: 210px\">"
+		//																			1																								2																							3																								4																								5
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<5; x++)
+		{
+			for(var y=0; y<5; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWBBWBYJUMPTWICE(" + x + "," + y + ", 1001)\"></button></div>";
+			}	
+		}
+	}
+
+	function levelTenB()
+	{
+		jumps = 2;
+		havejumped = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(1002)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 210px; height: 210px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 210px; height: 210px\">"
+		//																			1																								2																							3																								4																								5
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<5; x++)
+		{
+			for(var y=0; y<5; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWBBWBYJUMPTWICE(" + x + "," + y + ", 1002)\"></button></div>";
+			}	
+		}
+	}
+
+	function levelTenC()
+	{
+		jumps = 2;
+		havejumped = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(1003)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 210px; height: 210px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 210px; height: 210px\">"
+		//																			1																								2																							3																								4																								5
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<5; x++)
+		{
+			for(var y=0; y<5; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWBBWBYJUMPTWICE(" + x + "," + y + ", 1003)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelTenD()
+	{
+		jumps = 2;
+		havejumped = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(1004)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 210px; height: 210px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 210px; height: 210px\">"
+		//																			1																								2																							3																								4																								5
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<5; x++)
+		{
+			for(var y=0; y<5; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWBBWBYJUMPTWICE(" + x + "," + y + ", 1004)\"></button></div>";
+			}	
+		}
+	}
+
+	function levelTenE()
+	{
+		jumps = 2;
+		havejumped = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(1005)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 210px; height: 210px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 210px; height: 210px\">"
+		//																			1																								2																							3																								4																								5
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<5; x++)
+		{
+			for(var y=0; y<5; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWBBWBYJUMPTWICE(" + x + "," + y + ", 1005)\"></button></div>";
+			}	
+		}
+	}	
+
+	function levelTenF()
+	{
+		jumps = 2;
+		havejumped = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(1006)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 210px; height: 210px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 210px; height: 210px\">"
+		//																			1																								2																							3																								4																								5
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<5; x++)
+		{
+			for(var y=0; y<5; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWBBWBYJUMPTWICE(" + x + "," + y + ", 1006)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelEleven()
+	{
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		let lvleleven;
+	
+		do
+		{
+			lvleleven = Math.floor(Math.random() * 5);
+		}
+		while(lvleleven == havedone10)
+		
+		switch(lvleleven)
+		{
+			case 0:
+				levelTenA();
+				break;
+			case 1:
+				levelTenB();
+				break;
+			case 2:
+				levelTenC();
+				break;	
+			case 3:
+				levelTenD();
+				break;	
+			case 4:
+				levelTenE();
+				break;	
+			case 5:
+				levelTenF();
+				break;								
+		}
+		
+		elevenisdone = 1;
+	}
+	
+	function levelTwelve()
+	{
+		let lvltwelve; 
+		
+		lvltwelve = Math.floor(Math.random() * 4);
+		
+		switch(lvltwelve)
+		{
+			case 0:
+				levelTwelveA();
+				break;
+			case 1:
+				levelTwelveB();
+				break;
+			case 2:
+				levelTwelveC();
+				break;
+			case 3:
+				levelTwelveD();
+				break;						
+		}
+	}	
+
+	function levelTwelveA()
+	{
+		jumps = 2;
+		havejumped = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(1201)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 210px; height: 210px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 210px; height: 210px\">"
+		//																			1																								2																							3																								4																								5
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<5; x++)
+		{
+			for(var y=0; y<5; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBWBBYJUMPTWICE(" + x + "," + y + ", 1201)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelTwelveB()
+	{
+		jumps = 2;
+		havejumped = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(1202)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 210px; height: 210px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 210px; height: 210px\">"
+		//																			1																								2																							3																								4																								5
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<5; x++)
+		{
+			for(var y=0; y<5; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBWBBYJUMPTWICE(" + x + "," + y + ", 1202)\"></button></div>";
+			}	
+		}
+	}
+
+	function levelTwelveC()
+	{
+		jumps = 2;
+		havejumped = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(1203)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 210px; height: 210px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 210px; height: 210px\">"
+		//																			1																								2																							3																								4																								5
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<5; x++)
+		{
+			for(var y=0; y<5; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBWBBYJUMPTWICE(" + x + "," + y + ", 1203)\"></button></div>";
+			}	
+		}
+	}
+	
+	function levelTwelveD()
+	{
+		jumps = 2;
+		havejumped = 0;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("replace0").innerHTML = "<button onclick=\"cleartheboard(1204)\" style=\"height: 20px; width: 60px; outline: none; cursor: -webkit-grab; cursor: grab;\">CLEAR</button>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 210px; height: 210px\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = ""
+		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 210px; height: 210px\">"
+		//																			1																								2																							3																								4																								5
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<5; x++)
+		{
+			for(var y=0; y<5; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBWBBYJUMPTWICE(" + x + "," + y + ", 1204)\"></button></div>";
+			}	
+		}
+	}
+	
+	function cleartheboard(a)
+	{
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\"></div>";
+
+		switch(a)
+		{
+			case 101:
+				levelOneA();
+				break;
+			case 102:
+				levelOneB();
+				break;
+				
+			case 201:
+				levelTwoA();
+				break;			
+			case 2021:
+				levelTwoBA();
+				break;			
+			case 2022:
+				levelTwoBB();
+				break;
+			case 2023:
+				levelTwoBC();
+				break;				
+				
+			case 4011:
+				levelFourAA();
+				break;
+			case 4012:
+				levelFourAB();
+				break;	
+			case 4021:
+				levelFourBA();
+				break;	
+			case 4022:
+				levelFourBB();
+				break;
+				
+			case 501:
+				levelFiveA();
+				break;			
+			case 502:
+				levelFiveB();
+				break;			
+			case 503:
+				levelFiveC();
+				break;			
+			case 504:
+				levelFiveD();
+				break;
+					
+			case 701:
+				levelSevenA();
+				break;		
+			case 702:
+				levelSevenB();
+				break;		
+			case 703:
+				levelSevenC();
+				break;
+			case 704:
+				levelSevenD();
+				break;		
+			case 705:
+				levelSevenE();
+				break;
+
+			case 901:
+				levelNineA();
+				break;
+			case 902:
+				levelNineB();
+				break;
+			case 903:
+				levelNineC();
+				break;	
+
+			case 1001:
+				levelTenA();
+				break;
+			case 1002:
+				levelTenB();
+				break;	
+			case 1003:
+				levelTenC();
+				break;	
+			case 1004:
+				levelTenD();
+				break;
+			case 1005:
+				levelTenE();
+				break;	
+			case 1006:
+				levelTenF();
+				break;
+
+			case 1201:
+				levelTwelveA();
+				break;
+			case 1202:
+				levelTwelveB();
+				break;
+			case 1203:
+				levelTwelveC();
+				break;
+			case 1204:
+				levelTwelveD();
+				break;
+		}
+	}
+	
+	function returnpieceBYLINE(a, b, level)
+	{
+		if(i==0)
+		{
+			if(z[a][b] == 0)
+			{
+				if((i%2) == 0)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+				else if((i%2) == 1)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}	
+		else if(i>0)
+		{
+			if(z[a][b] == 0 && ((a == (p-1) && b == q) || (a == (p+1) && b == q) || (b == (q-1) && a == p) || (b == (q+1) && a == p)))
+			{
+				if((i%2) == 0)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+				else if((i%2) == 1)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}	
+		
+		checkboxes(level);
+	}
+	
+	function returnpieceBYJUMP(a, b, level)
+	{
+		if(z[a][b] == 0)
+		{
+			if((i%2) == 0)
+			{
+				document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+				z[a][b] = 1;
+			}
+			else if((i%2) == 1)
+			{
+				document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+				z[a][b] = 2;
+			}
+		
+			i++;
+		}
+		
+		checkboxes(level);
+	}
+	
+	function returnpieceDoubleBYLINE(a, b, level)
+	{
+		if(i==0)
+		{
+			if(z[a][b] == 0)
+			{
+				if((i%4) == 0 || (i%4) == 1)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+				else if((i%4) == 2 || (i%4) == 3)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}	
+		else if(i>0)
+		{
+			if(z[a][b] == 0 && ((a == (p-1) && b == q) || (a == (p+1) && b == q) || (b == (q-1) && a == p) || (b == (q+1) && a == p)))
+			{
+				if((i%4) == 0 || (i%4) == 1)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+				else if((i%4) == 2 || (i%4) == 3)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}	
+		
+		checkboxes(level);
+	}
+	
+	function returnpieceDoubleBlackFirstBYLINE(a, b, level)
+	{
+		if(i==0)
+		{
+			if(z[a][b] == 0)
+			{
+				if((i%4) == 0 || (i%4) == 1)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%4) == 2 || (i%4) == 3)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}	
+		else if(i>0)
+		{
+			if(z[a][b] == 0 && ((a == (p-1) && b == q) || (a == (p+1) && b == q) || (b == (q-1) && a == p) || (b == (q+1) && a == p)))
+			{
+				if((i%4) == 0 || (i%4) == 1)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%4) == 2 || (i%4) == 3)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}	
+		
+		checkboxes(level);
+	}		
+	
+	function returnpieceDoubleBYJUMP(a, b, level)
+	{
+		if(z[a][b] == 0)
+		{
+			if((i%4) == 0 || (i%4) == 1)
+			{
+				document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+				z[a][b] = 1;
+			}
+			else if((i%4) == 2 || (i%4) == 3)
+			{
+				document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+				z[a][b] = 2;
+			}
+		
+			i++;
+		}
+		
+		checkboxes(level);
+	}
+	
+	function returnpieceDoubleBlackFirstBYJUMP(a, b, level)
+	{
+		if(z[a][b] == 0)
+		{
+			if((i%4) == 0 || (i%4) == 1)
+			{
+				document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+				z[a][b] = 2;
+			}
+			else if((i%4) == 2 || (i%4) == 3)
+			{
+				document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+				z[a][b] = 1;
+			}
+		
+			i++;
+		}
+		
+		checkboxes(level);
+	}		
+	
+	function returnpieceBlackFirst(a, b, level)
+	{
+		if(i==0)
+		{
+			if(z[a][b] == 0)
+			{
+				if((i%2) == 0)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%2) == 1)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}	
+		else if(i>0)
+		{
+			if(z[a][b] == 0 && ((a == (p-1) && b == q) || (a == (p+1) && b == q) || (b == (q-1) && a == p) || (b == (q+1) && a == p)))
+			{
+				if((i%2) == 0)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%2) == 1)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}
+		
+		checkboxes(level);
+	}	
+	
+	function returnpieceWhiteGoesTwice(a, b, level)
+	{
+		if(i==0)
+		{
+			if(z[a][b] == 0)
+			{
+				if((i%3) == 2)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}			
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}	
+		else if(i>0)
+		{
+			if(z[a][b] == 0 && ((a == (p-1) && b == q) || (a == (p+1) && b == q) || (b == (q-1) && a == p) || (b == (q+1) && a == p)))
+			{
+				if((i%3) == 2)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}			
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}
+
+		checkboxes(level);
+	}	
+
+	function returnpieceBlackGoesTwiceAfterGoingOnce(a, b, level)
+	{
+		if(i==0)
+		{
+			if(z[a][b] == 0)
+			{
+				if((i%5) == 1 || (i%5) == 3 || (i%5) == 4)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%5) == 0 || (i%5) == 2)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}	
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}	
+		else if(i>0)
+		{
+			if(z[a][b] == 0 && ((a == (p-1) && b == q) || (a == (p+1) && b == q) || (b == (q-1) && a == p) || (b == (q+1) && a == p)))
+			{
+				if((i%5) == 1 || (i%5) == 3 || (i%5) == 4)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%5) == 0 || (i%5) == 2)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}
+
+		checkboxes(level);
+	}	
+
+	function returnpieceWBBWBYJUMPONCE(a, b, level) //returnpieceDoubleAfterWhiteGoesOnceBYJUMPONCE()
+	{
+		if(i==0)
+		{
+			if(z[a][b] == 0)
+			{
+				if((i%4) == 1 || (i%4) == 2)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%4) == 0 || (i%4) == 3)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}	
+		else if(i>0)
+		{
+			if(z[a][b] == 0 && ((a == (p-1) && b == q) || (a == (p+1) && b == q) || (b == (q-1) && a == p) || (b == (q+1) && a == p)))
+			{
+				if((i%4) == 1 || (i%4) == 2)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%4) == 0 || (i%4) == 3)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+			else if(z[a][b] == 0 && havejumped == 0)
+			{
+				if((i%4) == 1 || (i%4) == 2)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%4) == 0 || (i%4) == 3)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+
+				havejumped = 1;
+				i++;
+				
+				p = a;
+				q = b;
+				
+				document.getElementById("").innerHTML = "Jump: " + --jumps;
+			}
+		}	
+		
+		checkboxes(level);
+	}
+	
+	function returnpieceWBBWBYJUMPTWICE(a, b, level)
+	{
+		if(i==0)
+		{
+			if(z[a][b] == 0)
+			{
+				if((i%4) == 1 || (i%4) == 2)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%4) == 0 || (i%4) == 3)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}	
+		else if(i>0)
+		{
+			if(z[a][b] == 0 && ((a == (p-1) && b == q) || (a == (p+1) && b == q) || (b == (q-1) && a == p) || (b == (q+1) && a == p)))
+			{
+				if((i%4) == 1 || (i%4) == 2)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%4) == 0 || (i%4) == 3)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+			else if(z[a][b] == 0 && havejumped < 2)
+			{
+				if((i%4) == 1 || (i%4) == 2)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%4) == 0 || (i%4) == 3)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+
+				havejumped++;
+				i++;
+				
+				p = a;
+				q = b;
+				
+				document.getElementById("").innerHTML = "Jump: " + --jumps;
+			}
+		}	
+		
+		checkboxes(level);
+	}
+	
+	function returnpieceBWBBYJUMPTWICE(a, b, level)
+	{
+		if(i==0)
+		{
+			if(z[a][b] == 0)
+			{
+				if((i%3) == 0 || (i%3) == 2)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%3) == 1)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+		}	
+		else if(i>0)
+		{
+			if(z[a][b] == 0 && ((a == (p-1) && b == q) || (a == (p+1) && b == q) || (b == (q-1) && a == p) || (b == (q+1) && a == p)))
+			{
+				if((i%3) == 0 || (i%3) == 2)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%3) == 1)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+			
+				i++;
+				
+				p = a;
+				q = b;
+			}
+			else if(z[a][b] == 0 && havejumped < 2)
+			{
+				if((i%3) == 0 || (i%3) == 2)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+					z[a][b] = 2;
+				}
+				else if((i%3) == 1)
+				{
+					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+					z[a][b] = 1;
+				}
+
+				havejumped++;
+				i++;
+				
+				p = a;
+				q = b;
+				
+				document.getElementById("").innerHTML = "Jump: " + --jumps;
+			}
+		}	
+		
+		checkboxes(level);
+	}
+	
+	/*
+	function returnpiece(a, b, level, order)
+	{
+
+		if(z[a][b] == 0)
+		{
+			if((i%2) == 0)
+			{
+				document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
+				z[a][b] = 1;
+			}
+			else if((i%2) == 1)
+			{
+				document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
+				z[a][b] = 2;
+			}
+		
+			i++;
+		}
+		
+		checkboxes(level);
+	}	*/
+	
+	function checkboxes(lvl)
+	{
+		switch(lvl)
+		{
+			case 101:
+				if(z[0][0] == 1 && z[0][1] == 2 && z[1][0] == 2 && z[1][1] == 1)
+				{
+					levelTwo();
+					
+					document.getElementById("1a").style.backgroundColor = "black";
+				}
+				break;			
+			case 102:
+				if(z[0][0] == 1 && z[0][1] == 2 && z[1][0] == 1 && z[1][1] == 2)
+				{
+					levelTwo();
+					
+					document.getElementById("1b").style.backgroundColor = "black";
+				}
+				break;
+	
+			case 201:
+				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 1 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 2 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 1)
+				{
+					if(threeisdone == 0)
+					{	
+						levelThree();
+					}
+					else levelFour();
+					
+					document.getElementById("2a").style.backgroundColor = "black";
+				}
+				break;			
+			case 2021:
+				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 1 && z[1][0] == 1 && z[1][1] == 2 && z[1][2] == 1 && z[2][0] == 2 && z[2][1] == 2 && z[2][2] == 2)
+				{
+					if(threeisdone == 0)
+					{	
+						levelThree();
+					}
+					else levelFour();
+					
+					document.getElementById("2ba").style.backgroundColor = "black";
+				}
+				break;
+			case 2022:
+				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 2 && z[1][0] == 1 && z[1][1] == 1 && z[1][2] == 1 && z[2][0] == 2 && z[2][1] == 2 && z[2][2] == 1)
+				{
+					if(threeisdone == 0)
+					{	
+						levelThree();
+					}
+					else levelFour();
+					
+					document.getElementById("2bb").style.backgroundColor = "black";
+				}
+				break;	
+			case 2023:
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 2 && z[1][0] == 1 && z[1][1] == 2 && z[1][2] == 1 && z[2][0] == 2 && z[2][1] == 1 && z[2][2] == 1)
+				{
+					if(threeisdone == 0)
+					{	
+						levelThree();
+					}
+					else levelFour();
+					
+					document.getElementById("2bc").style.backgroundColor = "black";
+				}
+				break;
+				
+			case 4011:
+				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 2 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 2 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 1)
+				{
+					levelFourAB();
+					
+					document.getElementById("4aa").style.backgroundColor = "black";
+				}
+				break;
+			case 4012:
+				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 2 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 2 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 1)
+				{
+					levelFive();
+					
+					document.getElementById("4ab").style.backgroundColor = "black";
+				}
+				break;				
+			case 4021:
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 1 && z[0][3] == 2 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 2 && z[3][3] == 1)
+				{
+					levelFourBB();
+					
+					document.getElementById("4ba").style.backgroundColor = "black";
+				}
+				break;				
+			case 4022:
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 1 && z[0][3] == 2 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 2 && z[3][3] == 1)
+				{
+					levelFive();
+					
+					document.getElementById("4bb").style.backgroundColor = "black";
+				}
+				break;				
+				
+			case 501:
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 1 && z[0][3] == 1 && z[1][0] == 1 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 1 && z[2][3] == 1 && z[3][0] == 1 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 1)
+				{
+					if(sixisdone == 0)
+					{	
+						levelSix();
+					}
+					else levelSeven();
+					
+					document.getElementById("5a").style.backgroundColor = "black";
+				}
+				break;
+			case 502:
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 1 && z[0][3] == 2 && z[1][0] == 1 && z[1][1] == 1 && z[1][2] == 1 && z[1][3] == 1 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 1 && z[3][3] == 2	)
+				{
+					if(sixisdone == 0)
+					{	
+						levelSix();
+					}
+					else levelSeven();
+					
+					document.getElementById("5b").style.backgroundColor = "black";
+				}
+				break;
+			case 503:
+				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 1 && z[0][3] == 2 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 1 && z[1][3] == 1 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 1 && z[2][3] == 1 && z[3][0] == 1 && z[3][1] == 1 && z[3][2] == 1 && z[3][3] == 2)
+				{
+					if(sixisdone == 0)
+					{	
+						levelSix();
+					}
+					else levelSeven();
+					
+					document.getElementById("5c").style.backgroundColor = "black";
+				}
+				break;	
+			case 504:
+				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 1 && z[1][3] == 1 && z[2][0] == 2 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 1 && z[3][1] == 1 && z[3][2] == 2 && z[3][3] == 1)
+				{
+					if(sixisdone == 0)
+					{	
+						levelSix();
+					}
+					else levelSeven();
+					
+					document.getElementById("5d").style.backgroundColor = "black";
+				}
+				break;	
+				
+			case 701:
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 1 && z[0][3] == 2 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 1 && z[3][3] == 2)
+				{
+					if(eightisdone == 0)
+					{	
+						levelEight();
+					}
+					else levelNine();
+					
+					document.getElementById("7a").style.backgroundColor = "black";
+				}
+				break;
+			case 702:
+				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 2 && z[3][3] == 2)
+				{
+					if(eightisdone == 0)
+					{	
+						levelEight();
+					}
+					else levelNine();
+					
+					document.getElementById("7b").style.backgroundColor = "black";
+				}
+				break;	
+			case 703:
+				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 2 && z[2][3] == 2 && z[3][0] == 1 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 1)
+				{
+					if(eightisdone == 0)
+					{	
+						levelEight();
+					}
+					else levelNine();
+					
+					document.getElementById("7c").style.backgroundColor = "black";
+				}
+				break;		
+			case 704:
+				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 2 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 1)
+				{
+					if(eightisdone == 0)
+					{	
+						levelEight();
+					}
+					else levelNine();
+					
+					document.getElementById("7d").style.backgroundColor = "black";
+				}
+				break;	
+			case 705:
+				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 1 && z[0][3] == 2 && z[1][0] == 1 && z[1][1] == 2 && z[1][2] == 2 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 1 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 2)
+				{
+					if(eightisdone == 0)
+					{	
+						levelEight();
+					}
+					else levelNine();
+					
+					document.getElementById("7e").style.backgroundColor = "black";
+				}
+				break;
+
+			case 901:
+				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 2 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 1 && z[2][0] == 2 && z[2][1] == 2 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 1 && z[3][1] == 1 && z[3][2] == 2 && z[3][3] == 1)
+				{
+					levelTen();
+					
+					document.getElementById("9a").style.backgroundColor = "black";
+				}
+				break;
+			case 902:
+				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 2 && z[1][3] == 1 && z[2][0] == 2 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 2 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 1 && z[3][3] == 2)
+				{
+					levelTen();
+					
+					document.getElementById("9b").style.backgroundColor = "black";
+				}
+				break;
+			case 903:
+				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 2 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 1 && z[2][0] == 2 && z[2][1] == 2 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 1 && z[3][1] == 1 && z[3][2] == 1 && z[3][3] == 2)
+				{
+					levelTen();
+					
+					document.getElementById("9c").style.backgroundColor = "black";
+				}
+				break;	
+
+			case 1001:
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 1 && z[0][3] == 2 && z[0][4] == 2 && z[1][0] == 1 && z[1][1] == 2 && z[1][2] == 1 && z[1][3] == 2 && z[1][4] == 1 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 1 && z[2][3] == 1  && z[2][4] == 2 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 1 && z[3][3] == 1 && z[3][4] == 2 && z[4][0] == 2 && z[4][1] == 1 && z[4][2] == 2 && z[4][3] == 2 && z[4][4] == 1)
+				{
+					if(elevenisdone == 0)
+					{	
+						levelEleven();
+					}
+					else levelTwelve();
+					
+					document.getElementById("10a").style.backgroundColor = "black";
+				}
+				break;	
+			case 1002:
+				if(z[0][0] == 2 && z[0][1] == 2 && z[0][2] == 2 && z[0][3] == 1 && z[0][4] == 1 && z[1][0] == 1 && z[1][1] == 1 && z[1][2] == 1 && z[1][3] == 2 && z[1][4] == 2 && z[2][0] == 2 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 1  && z[2][4] == 1 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 1 && z[3][3] == 1 && z[3][4] == 1 && z[4][0] == 1 && z[4][1] == 2 && z[4][2] == 2 && z[4][3] == 2 && z[4][4] == 2)
+				{
+					if(elevenisdone == 0)
+					{	
+						levelEleven();
+					}
+					else levelTwelve();
+					
+					document.getElementById("10b").style.backgroundColor = "black";
+				}
+				break;	
+			case 1003:
+				if(z[0][0] == 2 && z[0][1] == 2 && z[0][2] == 1 && z[0][3] == 1 && z[0][4] == 2 && z[1][0] == 1 && z[1][1] == 2 && z[1][2] == 2 && z[1][3] == 1 && z[1][4] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 1  && z[2][4] == 1 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 2 && z[3][3] == 1 && z[3][4] == 2 && z[4][0] == 2 && z[4][1] == 1 && z[4][2] == 1 && z[4][3] == 1 && z[4][4] == 2)
+				{
+					if(elevenisdone == 0)
+					{	
+						levelEleven();
+					}
+					else levelTwelve();
+					
+					document.getElementById("10c").style.backgroundColor = "black";
+				}
+				break;	
+			case 1004:
+				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 1 && z[0][3] == 1 && z[0][4] == 2 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 2 && z[1][3] == 2 && z[1][4] == 2 && z[2][0] == 2 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 1  && z[2][4] == 1 && z[3][0] == 1 && z[3][1] == 1 && z[3][2] == 2 && z[3][3] == 2 && z[3][4] == 2 && z[4][0] == 1 && z[4][1] == 2 && z[4][2] == 2 && z[4][3] == 1 && z[4][4] == 1)
+				{
+					if(elevenisdone == 0)
+					{	
+						levelEleven();
+					}
+					else levelTwelve();
+					
+					document.getElementById("10d").style.backgroundColor = "black";
+				}
+				break;
+			case 1005:
+				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 1 && z[0][4] == 2 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 1 && z[1][4] == 2 && z[2][0] == 2 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 1  && z[2][4] == 1 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 2 && z[3][3] == 2 && z[3][4] == 1 && z[4][0] == 2 && z[4][1] == 1 && z[4][2] == 1 && z[4][3] == 2 && z[4][4] == 2)
+				{
+					if(elevenisdone == 0)
+					{	
+						levelEleven();
+					}
+					else levelTwelve();
+					
+					document.getElementById("10e").style.backgroundColor = "black";
+				}
+				break;	
+			case 1006:
+				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 1 && z[0][3] == 1 && z[0][4] == 1 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 2 && z[1][3] == 2 && z[1][4] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 1  && z[2][4] == 2 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 2 && z[3][3] == 1 && z[3][4] == 1 && z[4][0] == 2 && z[4][1] == 1 && z[4][2] == 1 && z[4][3] == 2 && z[4][4] == 2)
+				{
+					if(elevenisdone == 0)
+					{	
+						levelEleven();
+					}
+					else levelTwelve();
+					
+					document.getElementById("10f").style.backgroundColor = "black";
+				}
+				break;
+
+			case 1201:
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 2 && z[0][4] == 2 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 1 && z[1][4] == 1 && z[2][0] == 2 && z[2][1] == 2 && z[2][2] == 1 && z[2][3] == 2  && z[2][4] == 2 && z[3][0] == 1 && z[3][1] == 2 && z[3][2] == 2 && z[3][3] == 2 && z[3][4] == 2 && z[4][0] == 2 && z[4][1] == 1 && z[4][2] == 2 && z[4][3] == 2 && z[4][4] == 1)
+				{
+					levelThirteen();
+					
+					document.getElementById("12a").style.backgroundColor = "black";
+				}
+				break;	
+			case 1202:
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 2 && z[0][4] == 2 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 2 && z[1][3] == 2 && z[1][4] == 1 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 2  && z[2][4] == 2 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 2 && z[3][3] == 1 && z[3][4] == 2 && z[4][0] == 2 && z[4][1] == 1 && z[4][2] == 2 && z[4][3] == 1 && z[4][4] == 2)
+				{
+					levelThirteen();
+					
+					document.getElementById("12b").style.backgroundColor = "black";
+				}
+				break;	
+			case 1203:
+				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 2 && z[0][3] == 2 && z[0][4] == 1 && z[1][0] == 1 && z[1][1] == 2 && z[1][2] == 1 && z[1][3] == 2 && z[1][4] == 2 && z[2][0] == 2 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 2  && z[2][4] == 2 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 2 && z[3][3] == 1 && z[3][4] == 1 && z[4][0] == 1 && z[4][1] == 2 && z[4][2] == 2 && z[4][3] == 2 && z[4][4] == 2)
+				{
+					levelThirteen();
+					
+					document.getElementById("12c").style.backgroundColor = "black";
+				}
+				break;	
+			case 1204:
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 1 && z[0][4] == 2 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 2 && z[1][4] == 2 && z[2][0] == 2 && z[2][1] == 2 && z[2][2] == 1 && z[2][3] == 2  && z[2][4] == 1 && z[3][0] == 1 && z[3][1] == 2 && z[3][2] == 2 && z[3][3] == 2 && z[3][4] == 1 && z[4][0] == 2 && z[4][1] == 2 && z[4][2] == 1 && z[4][3] == 2 && z[4][4] == 2)
+				{
+					levelThirteen();
+					
+					document.getElementById("12d").style.backgroundColor = "black";
+				}
+				break;					
+		}
+	}
+	
+	function password1()
+	{
+		password += "seh";
+		passwordcheck();
+	}
+	
+	function password2()
+	{
+		password += "nir";
+		passwordcheck();
+	}
+	
+	function passwordcheck()
+	{
+		//if(password == "sehsehnirsehnirnirnirseh") //11212221
+		if(password == "sehnir") //12
+		{
+			showLevelPanel();
+		}
+		
+		if(password == "nirseh") //21
+		{
+			showInstructionsPanel();
+		}
+	}
+</script>

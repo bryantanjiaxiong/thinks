@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"> 
+		<title>Think's</title>
+		<style type="text/css">
+			.circle {height: 30px; width: 30px; background-color: #d9b382; border: #d9b382 solid 1px; outline: none; border-radius: 50%; cursor: -webkit-grab; cursor: grab; margin-top: 5px;}
+			.circleInstructions {height: 24px; width: 24px; outline: none; border-radius: 50%;}
+			.levelbutton {background-color: white; height: 20px; width: 20px; outline: none; border-radius: 50%;}
+			#levelpanel {opacity: 0; transition: opacity 3s ease;}
+			#levelpanel:hover {opacity: 1;}
+			
+			#chessboard {
+							width: 84px;
+							height: 84px;
+							margin: 20px;
+							border: 2px solid #333;
+						}
+						
+			#picboard {
+							width: 84px;
+							height: 84px;
+							border: 2px solid #333;
+						}
+						
+			.beige		{
+							float: left;
+							width: 40px;
+							height: 40px;
+							background-color: #d9b382;
+							text-align:center;
+							display: table-cell;
+							vertical-align:middle;
+							border: 1px black solid;
+						}						
+		</style>
+	</head>
+	<body> 
+		<div id="replace0"><div align="center" style="margin-top: 300px;"><button onclick="tutorial()">Start Tutorial</button><a href="thinks.html" target="_blank"><button>Skip Tutorial</button></a></div></div>
+		<div style="display: grid; grid-template-columns: 4fr 4fr 1fr;">
+			<div id="replace" align="center"></div>
+		
+			<div>
+				<div id="thepictureforimitation" align="center"></div>
+				
+				<div id="instructionsright" align="center"></div>
+			</div>
+			
+			<div id="levelpanel" style="align: right;"></div>
+		</div>	
+	</body>
+</html>
+<script>
+	let i;
+	var z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	var jumps;
+
+	function makeboard()
+	{
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+		
+		document.getElementById("replace0").innerHTML = "<a href=\"thinks.html\" target=\"_blank\"><button>Skip Tutorial</button></a>";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 126px; height: 126px\"></div><div id=\"instructionsleft\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\" style=\"width: 126px; height: 126px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div style=\"margin-top: 30px;\">";
+		
+		for(var x=0; x<3; x++)
+		{
+			for(var y=0; y<3; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBYLINE(" + x + "," + y + ", 101)\"></button></div>";
+			}	
+		}
+	}
+	
+	function makeboard1()
+	{
+		jumps = 1;
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("instructionsright").innerHTML = "";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 126px; height: 126px\"></div><div id=\"instructionsleft\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 126px; height: 126px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px; margin-bottom: 15px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		
+		for(var x=0; x<3; x++)
+		{
+			for(var y=0; y<3; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBYJUMP(" + x + "," + y + ", 2021)\"></button></div>";
+			}	
+		}
+	}
+	
+	function makeboard2()
+	{
+		i = 0;
+		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	
+		document.getElementById("instructionsright").innerHTML = "";
+		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 126px; height: 126px\"></div><div id=\"instructionsleft\"></div>";
+		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 126px; height: 126px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px; margin-bottom: 15px;\"><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div></div>";
+		
+		for(var x=0; x<3; x++)
+		{
+			for(var y=0; y<3; y++)
+			{
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBYJUMP(" + x + "," + y + ", 2021)\"></button></div>";
+			}	
+		}
+	}	
+	
+	function tutorial()
+	{		
+		setTimeout(makeboard, 0);
+		setTimeout(function(){ document.getElementById("instructionsleft").innerHTML = "Generally,<br>The Adjacent Rule:<br>You can only fill squares adjacent to the previous one you filled,<br>Given that you have already filled one."; }, 1000);
+		setTimeout(function(){ document.getElementById("box[0][0]").style.backgroundColor = "white"; }, 7500);
+		setTimeout(function(){ document.getElementById("box[0][1]").style.backgroundColor = "black"; }, 8000);
+		setTimeout(function(){ document.getElementById("box[0][2]").style.backgroundColor = "white"; }, 8500);
+		setTimeout(function(){ document.getElementById("box[1][2]").style.backgroundColor = "black"; }, 9000);
+		setTimeout(function(){ document.getElementById("box[1][1]").style.backgroundColor = "white"; }, 9500);
+		setTimeout(function(){ document.getElementById("box[1][0]").style.backgroundColor = "black"; }, 10000);
+		setTimeout(function(){ document.getElementById("box[2][0]").style.backgroundColor = "white"; }, 10500);
+		setTimeout(function(){ document.getElementById("box[2][1]").style.backgroundColor = "black"; }, 11000);
+		setTimeout(function(){ document.getElementById("box[2][2]").style.backgroundColor = "white"; }, 11500);
+		
+		setTimeout(makeboard, 14000);
+		setTimeout(function(){ document.getElementById("instructionsleft").innerHTML = "In any way."; }, 15000);
+		setTimeout(function(){ document.getElementById("box[0][0]").style.backgroundColor = "white"; }, 18500);
+		setTimeout(function(){ document.getElementById("box[1][0]").style.backgroundColor = "black"; }, 19000);
+		setTimeout(function(){ document.getElementById("box[2][0]").style.backgroundColor = "white"; }, 19500);
+		setTimeout(function(){ document.getElementById("box[2][1]").style.backgroundColor = "black"; }, 20000);
+		setTimeout(function(){ document.getElementById("box[2][2]").style.backgroundColor = "white"; }, 20500);
+		setTimeout(function(){ document.getElementById("box[1][2]").style.backgroundColor = "black"; }, 21000);
+		setTimeout(function(){ document.getElementById("box[1][1]").style.backgroundColor = "white"; }, 21500);
+		setTimeout(function(){ document.getElementById("box[0][1]").style.backgroundColor = "black"; }, 22000);
+		setTimeout(function(){ document.getElementById("box[0][2]").style.backgroundColor = "white"; }, 22500);
+		
+		setTimeout(function(){ document.getElementById("instructionsright").innerHTML = "As long as the boxes you are filling match the picture,<br>While using the pattern which is now:<br><br>White then Black then White then Black,<br>In repetition."; }, 25500);
+		
+		setTimeout(makeboard, 31000);
+		setTimeout(function(){ document.getElementById("box[1][1]").style.backgroundColor = "white"; }, 32500);
+		setTimeout(function(){ document.getElementById("box[1][2]").style.backgroundColor = "black"; }, 33000);
+		setTimeout(function(){ document.getElementById("box[2][2]").style.backgroundColor = "white"; }, 33500);
+		setTimeout(function(){ document.getElementById("box[2][1]").style.backgroundColor = "black"; }, 34000);
+		setTimeout(function(){ document.getElementById("box[2][0]").style.backgroundColor = "white"; }, 34500);
+		setTimeout(function(){ document.getElementById("box[1][0]").style.backgroundColor = "black"; }, 35000);
+		setTimeout(function(){ document.getElementById("box[0][0]").style.backgroundColor = "white"; }, 35500);
+		setTimeout(function(){ document.getElementById("box[0][1]").style.backgroundColor = "black"; }, 36000);
+		setTimeout(function(){ document.getElementById("box[0][2]").style.backgroundColor = "white"; }, 36500);
+
+		setTimeout(makeboard1, 39000);
+		setTimeout(function(){ document.getElementById("instructionsright").innerHTML = "However,<br>Imitating this picture,<br>You can never fill all the squares with just The Adjacent Rule.<br><br>"; }, 42000);	
+		setTimeout(function(){ document.getElementById("box[0][0]").style.backgroundColor = "white"; }, 47500);
+		setTimeout(function(){ document.getElementById("box[1][0]").style.backgroundColor = "black"; }, 48000);
+		setTimeout(function(){ document.getElementById("box[2][0]").style.backgroundColor = "white"; }, 48500);
+		setTimeout(function(){ document.getElementById("box[2][1]").style.backgroundColor = "black"; }, 49000);
+		setTimeout(function(){ document.getElementById("box[2][2]").style.backgroundColor = "white"; }, 49500);
+		setTimeout(function(){ document.getElementById("box[1][2]").style.backgroundColor = "black"; }, 50000);
+		setTimeout(function(){ document.getElementById("box[0][2]").style.backgroundColor = "white"; }, 50500);
+		setTimeout(function(){ document.getElementById("instructionsright").innerHTML += "Now you are stuck<br><br>"; }, 54000);
+		setTimeout(function(){ document.getElementById("instructionsright").innerHTML += "Jumping:<br>Note the amount of \"Jump\"s you have.<br>For a specific amount of times,<br>They allow you to fill an unadjacent square,<br>And then you can continue the Adjacent Rule from that sqaure.<br><br>Use them wisely,<br>Challenge yourself to not use them up.<br><br>"; }, 58000);
+		setTimeout(function(){ document.getElementById("instructionsright").innerHTML += "In this case we are forced to use one.<br>Note that the pattern still continues,<br>So the next one will be Black."; }, 70000);
+		setTimeout(function(){ document.getElementById("box[1][1]").style.backgroundColor = "black"; document.getElementById("jumpcount").innerHTML = "Jump: " + --jumps;}, 74000);
+		setTimeout(function(){ document.getElementById("box[0][1]").style.backgroundColor = "white"; }, 74500);
+		
+		setTimeout(function(){ document.getElementById("instructionsleft").innerHTML = "Let us try something else.<br><br>"; }, 77000);
+		setTimeout(makeboard2, 77000);
+		setTimeout(function(){ document.getElementById("instructionsright").innerHTML = "We have the pattern Black White Black now,<br>With no jumps.<br><br>"; }, 82000);
+		setTimeout(function(){ document.getElementById("instructionsright").innerHTML += "You have ten seconds<br>Find a pattern<br><br>"; }, 84000);
+		setTimeout(function(){ document.getElementById("instructionsleft").innerHTML += "There are a few ways,<br>This is one."; }, 94500);
+		setTimeout(function(){ document.getElementById("box[1][1]").style.backgroundColor = "black"; }, 96000);
+		setTimeout(function(){ document.getElementById("box[1][0]").style.backgroundColor = "white"; }, 96500);
+		setTimeout(function(){ document.getElementById("box[0][0]").style.backgroundColor = "black"; }, 97000);
+		setTimeout(function(){ document.getElementById("box[0][1]").style.backgroundColor = "black"; }, 97500);
+		setTimeout(function(){ document.getElementById("box[0][2]").style.backgroundColor = "white"; }, 98000);
+		setTimeout(function(){ document.getElementById("box[1][2]").style.backgroundColor = "black"; }, 98500);
+		setTimeout(function(){ document.getElementById("box[2][2]").style.backgroundColor = "black"; }, 99000);
+		setTimeout(function(){ document.getElementById("box[2][1]").style.backgroundColor = "white"; }, 99500);
+		setTimeout(function(){ document.getElementById("box[2][0]").style.backgroundColor = "black"; }, 100000);
+	}	
+</script>
