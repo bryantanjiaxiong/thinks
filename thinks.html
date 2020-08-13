@@ -759,17 +759,17 @@
 		document.getElementById("thepictureforimitation").innerHTML = ""
 		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
 		//																			1																								2																							3																								4
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
-		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
 		
 		for(var x=0; x<4; x++)
 		{
 			for(var y=0; y<4; y++)
 			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 701)\"></button></div>";
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwiceAfterGoingTwice(" + x + "," + y + ", 701)\"></button></div>";
 			}	
 		}
 	}
@@ -785,17 +785,17 @@
 		document.getElementById("thepictureforimitation").innerHTML = ""
 		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
 		//																			1																								2																							3																								4
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
 		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
-		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
 		
 		for(var x=0; x<4; x++)
 		{
 			for(var y=0; y<4; y++)
 			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 702)\"></button></div>";
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwiceAfterGoingTwice(" + x + "," + y + ", 702)\"></button></div>";
 			}	
 		}
 	}		
@@ -811,17 +811,17 @@
 		document.getElementById("thepictureforimitation").innerHTML = ""
 		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
 		//																			1																								2																							3																								4
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
-		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
 		
 		for(var x=0; x<4; x++)
 		{
 			for(var y=0; y<4; y++)
 			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 703)\"></button></div>";
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwiceAfterGoingTwice(" + x + "," + y + ", 703)\"></button></div>";
 			}	
 		}
 	}	
@@ -838,16 +838,16 @@
 		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
 		//																			1																								2																							3																								4
 		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
-		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
 		
 		for(var x=0; x<4; x++)
 		{
 			for(var y=0; y<4; y++)
 			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 704)\"></button></div>";
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwiceAfterGoingTwice(" + x + "," + y + ", 704)\"></button></div>";
 			}	
 		}
 	}	
@@ -863,17 +863,17 @@
 		document.getElementById("thepictureforimitation").innerHTML = ""
 		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
 		//																			1																								2																							3																								4
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
-		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
 		
 		for(var x=0; x<4; x++)
 		{
 			for(var y=0; y<4; y++)
 			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 705)\"></button></div>";
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwiceAfterGoingTwice(" + x + "," + y + ", 705)\"></button></div>";
 			}	
 		}
 	}
@@ -952,17 +952,17 @@
 		document.getElementById("thepictureforimitation").innerHTML = ""
 		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
 		//																			1																								2																							3																								4
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
-		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
 		
 		for(var x=0; x<4; x++)
 		{
 			for(var y=0; y<4; y++)
 			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwiceAfterGoingTwice(" + x + "," + y + ", 7061)\"></button></div>";
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 7061)\"></button></div>";
 			}	
 		}
 	}
@@ -978,17 +978,17 @@
 		document.getElementById("thepictureforimitation").innerHTML = ""
 		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
 		//																			1																								2																							3																								4
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
 		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
-		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
 		
 		for(var x=0; x<4; x++)
 		{
 			for(var y=0; y<4; y++)
 			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwiceAfterGoingTwice(" + x + "," + y + ", 7062)\"></button></div>";
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 7062)\"></button></div>";
 			}	
 		}
 	}
@@ -1004,17 +1004,17 @@
 		document.getElementById("thepictureforimitation").innerHTML = ""
 		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
 		//																			1																								2																							3																								4
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
-		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
 		
 		for(var x=0; x<4; x++)
 		{
 			for(var y=0; y<4; y++)
 			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwiceAfterGoingTwice(" + x + "," + y + ", 7063)\"></button></div>";
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 7063)\"></button></div>";
 			}	
 		}
 	}
@@ -1031,16 +1031,16 @@
 		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
 		//																			1																								2																							3																								4
 		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
-		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
 		
 		for(var x=0; x<4; x++)
 		{
 			for(var y=0; y<4; y++)
 			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwiceAfterGoingTwice(" + x + "," + y + ", 7064)\"></button></div>";
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 7064)\"></button></div>";
 			}	
 		}
 	}
@@ -1056,17 +1056,17 @@
 		document.getElementById("thepictureforimitation").innerHTML = ""
 		+"<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 168px; height: 168px\">"
 		//																			1																								2																							3																								4
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
-		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
-		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div>"
+		+"<div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
+		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div></div>";
 		
 		for(var x=0; x<4; x++)
 		{
 			for(var y=0; y<4; y++)
 			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceWhiteGoesTwiceAfterGoingTwice(" + x + "," + y + ", 7065)\"></button></div>";
+				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBlackGoesTwiceAfterGoingOnce(" + x + "," + y + ", 7065)\"></button></div>";
 			}	
 		}
 	}	
@@ -2975,7 +2975,7 @@
 				break;	
 				
 			case 701:
-				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 1 && z[0][3] == 2 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 1 && z[3][3] == 2)
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 1 && z[1][1] == 1 && z[1][2] == 1 && z[1][3] == 1 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 1 && z[2][3] == 2 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 2 && z[3][3] == 1)
 				{
 					havedone7 = 0;					
 					
@@ -2989,7 +2989,7 @@
 				}
 				break;
 			case 702:
-				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 2 && z[3][3] == 2)
+				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 1 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 1 && z[3][3] == 2)
 				{
 					havedone7 = 1;					
 					
@@ -3003,7 +3003,7 @@
 				}
 				break;	
 			case 703:
-				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 2 && z[2][3] == 2 && z[3][0] == 1 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 1)
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 1 && z[1][1] == 2 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 2 && z[3][3] == 1)
 				{
 					havedone7 = 2;					
 					
@@ -3017,7 +3017,7 @@
 				}
 				break;		
 			case 704:
-				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 2 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 1)
+				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 1 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 1)
 				{
 					havedone7 = 3;					
 					
@@ -3031,7 +3031,7 @@
 				}
 				break;	
 			case 705:
-				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 1 && z[0][3] == 2 && z[1][0] == 1 && z[1][1] == 2 && z[1][2] == 2 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 1 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 2)
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 1 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 1 && z[2][0] == 2 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 2 && z[3][0] == 1 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 1)
 				{
 					havedone7 = 4;					
 					
@@ -3046,7 +3046,7 @@
 				break;
 				
 			case 7061:
-				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 1 && z[1][1] == 1 && z[1][2] == 1 && z[1][3] == 1 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 1 && z[2][3] == 2 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 2 && z[3][3] == 1)
+				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 1 && z[0][3] == 2 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 1 && z[3][3] == 2)
 				{
 					havedone7f = 0;					
 					
@@ -3060,7 +3060,7 @@
 				}
 				break;
 			case 7062:
-				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 1 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 1 && z[3][3] == 2)
+				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 2 && z[3][3] == 2)
 				{
 					havedone7f = 1;					
 					
@@ -3074,7 +3074,7 @@
 				}
 				break;		
 			case 7063:
-				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 1 && z[1][1] == 2 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 1 && z[3][2] == 2 && z[3][3] == 1)
+				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 2 && z[2][3] == 2 && z[3][0] == 1 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 1)
 				{
 					havedone7f = 2;					
 					
@@ -3088,7 +3088,7 @@
 				}
 				break;		
 			case 7064:
-				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 1 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 1)
+				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 2 && z[1][1] == 2 && z[1][2] == 1 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 1 && z[2][2] == 2 && z[2][3] == 2 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 1)
 				{
 					havedone7f = 3;					
 					
@@ -3102,7 +3102,7 @@
 				}
 				break;		
 			case 7065:
-				if(z[0][0] == 2 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 1 && z[1][0] == 1 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 1 && z[2][0] == 2 && z[2][1] == 1 && z[2][2] == 1 && z[2][3] == 2 && z[3][0] == 1 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 1)
+				if(z[0][0] == 1 && z[0][1] == 2 && z[0][2] == 1 && z[0][3] == 2 && z[1][0] == 1 && z[1][1] == 2 && z[1][2] == 2 && z[1][3] == 2 && z[2][0] == 1 && z[2][1] == 2 && z[2][2] == 1 && z[2][3] == 1 && z[3][0] == 2 && z[3][1] == 2 && z[3][2] == 1 && z[3][3] == 2)
 				{
 					havedone7f = 4;					
 					
@@ -3114,7 +3114,7 @@
 					
 					document.getElementById("7fe").style.backgroundColor = "black";
 				}
-				break;						
+				break;					
 
 			case 901:
 				if(z[0][0] == 1 && z[0][1] == 1 && z[0][2] == 2 && z[0][3] == 2 && z[1][0] == 2 && z[1][1] == 1 && z[1][2] == 2 && z[1][3] == 1 && z[2][0] == 2 && z[2][1] == 2 && z[2][2] == 2 && z[2][3] == 1 && z[3][0] == 1 && z[3][1] == 1 && z[3][2] == 2 && z[3][3] == 1)
