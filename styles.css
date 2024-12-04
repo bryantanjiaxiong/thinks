@@ -60,7 +60,7 @@ body{
 }
 
 /* General styling for the login panel */
-#Login {
+#content {
     display: none;
     justify-content: center;
     align-items: center;
@@ -71,7 +71,7 @@ body{
 }
 
 /* Login panel container */
-#Login form {
+#content #login-form {
     width: 100%;
     width: 400px;
     padding: 20px;
@@ -82,7 +82,7 @@ body{
 }
 
 /* Headings inside the form */
-#Login h1 {
+#content h1 {
     text-align: center;
     margin-bottom: 20px;
     color: #333;
@@ -90,8 +90,8 @@ body{
 }
 
 /* Input fields */
-#Login input[type="text"],
-#Login input[type="password"] {
+#content input[type="text"],
+#content input[type="password"] {
     width: 90%;
     padding: 10px;
     margin-bottom: 15px;
@@ -101,15 +101,15 @@ body{
 }
 
 /* Input focus styling */
-#Login input[type="text"]:focus,
-#Login input[type="password"]:focus {
+#content input[type="text"]:focus,
+#content input[type="password"]:focus {
     border-color: #007bff;
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 /* Login button */
-#Login button[type="submit"] {
+#content button[type="submit"] {
     width: 100%;
     padding: 10px;
     background-color: #007bff;
@@ -123,12 +123,12 @@ body{
 }
 
 /* Hover effect on the login button */
-#Login button[type="submit"]:hover {
+#content button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
 /* Error messages */
-#Login p {
+#content p {
     text-align: center;
     color: red;
     font-size: 0.9em;
@@ -137,12 +137,12 @@ body{
 
 /* Responsive design adjustments */
 @media (max-width: 480px) {
-    #Login form {
+    #content form {
         width: 100%;
         padding: 15px;
     }
 
-    #Login h1 {
+    #content h1 {
         font-size: 1.2em;
     }
 }
