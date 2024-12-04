@@ -1,0 +1,148 @@
+body{
+    background-image: url("jumponce.PNG");
+}
+
+#navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+#navbar li {
+    float: left;
+}
+  
+#navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+#navbar li a:hover {
+    background-color: red;
+}
+
+#Welcome-Message {
+    top: 0;
+    left: 0;
+    margin-top: 20%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+@keyframes example {
+    0%   {background-color: white; color: black;} 
+    25%  {background-color: lightgrey;color: rgb(58, 55, 55);}
+    50%  {background-color: grey;color: grey;}
+    75%  {background-color: rgb(58, 55, 55); color: lightgrey;}
+    100% {background-color: black;color: white;}
+  }
+
+#Welcome-Message h1 {
+    font-size: 80px;
+    text-align: center;
+    color: rgb(29, 183, 239);
+    font-style: oblique;
+    font-weight: bolder;
+    background-color: black;
+    font-family: monospace;
+    animation-name: example;
+    animation-duration: 4s;
+}
+
+/* General styling for the login panel */
+#Login {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-color: #f7f9fc;
+    font-family: Arial, sans-serif;
+    flex-direction: column;
+}
+
+/* Login panel container */
+#Login form {
+    width: 100%;
+    width: 400px;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings inside the form */
+#Login h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.5em;
+}
+
+/* Input fields */
+#Login input[type="text"],
+#Login input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+/* Input focus styling */
+#Login input[type="text"]:focus,
+#Login input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Login button */
+#Login button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect on the login button */
+#Login button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Error messages */
+#Login p {
+    text-align: center;
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 480px) {
+    #Login form {
+        width: 100%;
+        padding: 15px;
+    }
+
+    #Login h1 {
+        font-size: 1.2em;
+    }
+}
