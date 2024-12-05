@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", async function ()
     const welcomeMessage = document.getElementById("Welcome-Message");
 
     if(isLoggedIn()){
-        welcomeMessage.innerHTML = "<h1>Welcome to Thinks Admin!</h1>"
+        welcomeMessage.innerHTML = "<h1>Welcome to Thinks Admin!</h1> <div><button id=playbutton>Play</button></div>"
+
+        document.getElementById("playbutton").addEventListener("click", Play);
     }
 })

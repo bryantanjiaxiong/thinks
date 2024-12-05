@@ -37,6 +37,12 @@ body{
     justify-content: center;
     align-items: center;
     text-align: center;
+    flex-direction: column;
+}
+
+#Welcome-Message button {
+    padding: 15px 20px;
+    border-radius: 10px;
 }
 
 @keyframes example {
@@ -145,4 +151,67 @@ body{
     #content h1 {
         font-size: 1.2em;
     }
+}
+
+#game  {
+    display: none;
+    justify-content: left;
+    padding-left: 10%;
+    align-items: center;
+    text-align: center;
+    height: 90vh;
+    flex-direction: row;
+    background-color: #f7f9fc;
+}
+
+
+#playboard  {
+    justify-content: center;
+    align-items: left;
+    flex-direction: column;
+}
+
+.board-row {
+    display: flex;
+    flex-direction: row;
+}
+
+
+#goalboard  {
+    justify-content: center;
+    align-items: left;
+    flex-direction: column;
+    padding-left: 10%;
+}
+
+.goal-board-row{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.square {
+    float: left;
+    width: 80px;
+    height: 80px;
+    background-color: #d9b382;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+    border: 1px black solid;
+}
+
+.squarebutton {
+    float: left;
+    width: 80px;
+    height: 80px;
+    background-color: #d9b382;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+    border: 1px black solid;
+}
+
+.squarebutton:hover {
+    background-color: red;
 }
