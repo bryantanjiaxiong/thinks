@@ -32,6 +32,18 @@
 	
 	let i;
 	var z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	if (localStorage.getItem('unlockedLevel') === null) {
+    localStorage.setItem('unlockedLevel', '1');
+	}
+
+	let lastUnlockedLevel = localStorage.getItem('unlockedLevel');
+	setInterval(function() {
+		let currentUnlockedLevel = localStorage.getItem('unlockedLevel');
+		if (currentUnlockedLevel !== lastUnlockedLevel) {
+			lastUnlockedLevel = currentUnlockedLevel;
+			disableLockedLevels();
+		}
+	}, 500);
 
 	function onMobile()
 	{
@@ -41,6 +53,7 @@
 	
 	function onPC()
 	{
+		document.getElementById("thegrid").style.gridTemplateColumns = "300px 300px 300px";
 		document.getElementById("replace0").innerHTML = "<div align=\"center\"><button style=\"margin-top: 300px;\" id=user-choice onclick=\"levelOne()\">Start Game</button></div>";
 	}
 	
@@ -61,6 +74,7 @@
 		+"<tr><td><button id=\"12a\" class=\"levelbutton\" onclick=\"levelTwelveA()\"></button></td><td><button id=\"12b\" class=\"levelbutton\" onclick=\"levelTwelveB()\"></button></td><td><button id=\"12c\" class=\"levelbutton\" onclick=\"levelTwelveC()\"></button></td><td><button id=\"12d\" class=\"levelbutton\" onclick=\"levelTwelveD()\"></button></td></tr></table>";
 	
 		password = "";
+		disableLockedLevels();
 	}
 	
 	function showInstructionsPanel()
@@ -68,6 +82,7 @@
 		document.getElementById("levelpanel").innerHTML = "There are five elements in this game<br>(In the order of top to bottom and then left to right):<br>the CLEAR button<br>the DRAWING-BOARD<br>the REFERENCE-PICTURE<br>the PATTERN<br>and the MANEUVER<br><br>Your goal is to use the repetitive PATTERN to fill the DRAWING-BOARD to display the REFERENCE-PICTURE as exactly as it is<br><br>The MANEUVER is a tip as to what is allowed:<br><img src=\"byline.PNG\" alt=\"firstlevel\" height=\"30px\" width=\"75px\"><br>You can only fill squares adjacent to your previous square<br><br><img src=\"byjump.PNG\" alt=\"firstlevel\" height=\"30px\" width=\"75px\"><br>You can fill squares with infinite jumps<br><br><img src=\"jumponce.PNG\" alt=\"firstlevel\" height=\"30px\" width=\"75px\"><br>You can only jump once<br><br>There will be more but you will figure it out<br><br>Matching the REFERENCE-PICTURE will immediately send you to the next level";
 		
 		password = "";
+		disableLockedLevels(); 
 	}
 	
 	function byline(a)
@@ -79,6 +94,48 @@
 	{
 		document.getElementById(a).innerHTML = "<div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: white\"></div></div><div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: black\"></div></div><div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: black\"></div></div><div class=\"bywhatbeige\"><div class=\"bywhatcircle\" style=\"background-color: white\"></div></div>";
 	}	
+
+	function disableLockedLevels() {
+		// Get the unlocked level from localStorage (default to 1 if not set)
+		let unlockedLevel = parseInt(localStorage.getItem('unlockedLevel') || "1", 10);
+
+		// Map level numbers to button IDs (index 0 is level 1, index 1 is level 2, etc.)
+		const levelMap = [
+			["1a", "1b"], // Level 1
+			["2a", "2b", "2c", "2d", "2ea", "2eb", "2ec", "2ed"], // Level 2
+			["4aa", "4ab", "4ba", "4bb"], // Level 4
+			["5a", "5b", "5c", "5d"], // Level 5
+			["7a", "7b", "7c", "7d", "7e", "7fa", "7fb", "7fc", "7fd", "7fe"], // Level 7
+			["9aa", "9ab", "9ac", "9ba", "9bb", "9bc", "9ca", "9cb", "9cc", "9da", "9db", "9dc"], // Level 9
+			["10a", "10b", "10c", "10d", "10e", "10f"], // Level 10
+			["12a", "12b", "12c", "12d"], // Level 12
+		];
+
+		// Calculate which levels are unlocked (level 1 is index 0, so unlockedLevel 7 means index 0-4)
+		let unlockedIndex = -1;
+		// Map unlockedLevel to the correct index in levelMap
+		// Level numbers: 1,2,4,5,7,9,10,12
+		const levelNumbers = [1,2,4,5,7,9,10,12];
+		for (let i = 0; i < levelNumbers.length; i++) {
+			if (unlockedLevel >= levelNumbers[i]) {
+				unlockedIndex = i;
+			}
+		}
+
+		// Enable all buttons for levels up to unlockedIndex, disable the rest
+		for (let i = 0; i < levelMap.length; i++) {
+			let isEnabled = i <= unlockedIndex;
+			for (let btnId of levelMap[i]) {
+				let btn = document.getElementById(btnId);
+				if (btn) {
+					btn.disabled = !isEnabled;
+					if (btn.style.backgroundColor !== "black") {
+						btn.style.backgroundColor = isEnabled ? "grey" : "white";
+					}
+				}
+			}
+		}
+	}
 	
 	function levelOne()
 	{
@@ -3152,6 +3209,8 @@
 					levelTwo();
 					
 					document.getElementById("1a").style.backgroundColor = "black";
+					if(localStorage.getItem('unlockedLevel') < 2){
+					localStorage.setItem('unlockedLevel', '2');}
 				}
 				break;			
 			case 102:
@@ -3160,6 +3219,7 @@
 					levelTwo();
 					
 					document.getElementById("1b").style.backgroundColor = "black";
+					if(localStorage.getItem('unlockedLevel') < 2){localStorage.setItem('unlockedLevel', '2');}
 				}
 				break;
 	
@@ -3171,8 +3231,10 @@
 					if(threeisdone == 0)
 					{	
 						levelThree();
+						if(localStorage.getItem('unlockedLevel') < 2)
+						{localStorage.setItem('unlockedLevel', '2');}
 					}
-					else levelTwoE();
+					else {levelTwoE();if(localStorage.getItem('unlockedLevel') < 2){localStorage.setItem('unlockedLevel', '2')}}
 					
 					document.getElementById("2a").style.backgroundColor = "black";
 				}
@@ -3185,8 +3247,9 @@
 					if(threeisdone == 0)
 					{	
 						levelThree();
+						if(localStorage.getItem('unlockedLevel') < 2){localStorage.setItem('unlockedLevel', '2')};
 					}
-					else levelTwoE();
+					else {levelTwoE();if(localStorage.getItem('unlockedLevel') < 2){localStorage.setItem('unlockedLevel', '2')}}
 					
 					document.getElementById("2b").style.backgroundColor = "black";
 				}
@@ -3199,10 +3262,12 @@
 					if(threeisdone == 0)
 					{	
 						levelThree();
+						if(localStorage.getItem('unlockedLevel') < 2){localStorage.setItem('unlockedLevel', '2')};
 					}
-					else levelTwoE();
+					else {levelTwoE();if(localStorage.getItem('unlockedLevel') < 2){localStorage.setItem('unlockedLevel', '2')}}
 					
 					document.getElementById("2c").style.backgroundColor = "black";
+
 				}
 				break;	
 			case 204:
@@ -3213,10 +3278,12 @@
 					if(threeisdone == 0)
 					{	
 						levelThree();
+						if(localStorage.getItem('unlockedLevel') < 2){localStorage.setItem('unlockedLevel', '2')};
 					}
-					else levelTwoE();
+					else {levelTwoE();if(localStorage.getItem('unlockedLevel') < 2){localStorage.setItem('unlockedLevel', '2')}}
 					
 					document.getElementById("2d").style.backgroundColor = "black";
+
 				}
 				break;
 	
@@ -3226,6 +3293,7 @@
 					levelFour();
 					
 					document.getElementById("2ea").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 4){localStorage.setItem('unlockedLevel', '4')};
 				}
 				break;
 			case 2052:
@@ -3234,6 +3302,7 @@
 					levelFour();
 					
 					document.getElementById("2eb").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 4){localStorage.setItem('unlockedLevel', '4')};
 				}
 				break;	
 			case 2053:
@@ -3242,6 +3311,7 @@
 					levelFour();
 					
 					document.getElementById("2ec").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 4){localStorage.setItem('unlockedLevel', '4')};
 				}
 				break;	
 			case 2054:
@@ -3250,6 +3320,7 @@
 					levelFour();
 					
 					document.getElementById("2ed").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 4){localStorage.setItem('unlockedLevel', '4')};
 				}
 				break;					
 				
@@ -3259,6 +3330,7 @@
 					levelFourBB();
 					
 					document.getElementById("4aa").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 4){localStorage.setItem('unlockedLevel', '4')};
 				}
 				break;
 			case 4012:
@@ -3267,6 +3339,7 @@
 					levelFive();
 					
 					document.getElementById("4ab").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 5){localStorage.setItem('unlockedLevel', '5')};
 				}
 				break;				
 			case 4021:
@@ -3275,6 +3348,7 @@
 					levelFourAB();
 					
 					document.getElementById("4ba").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 4){localStorage.setItem('unlockedLevel', '4')};
 				}
 				break;				
 			case 4022:
@@ -3283,6 +3357,7 @@
 					levelFive();
 					
 					document.getElementById("4bb").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 5){localStorage.setItem('unlockedLevel', '5')};
 				}
 				break;				
 				
@@ -3294,10 +3369,12 @@
 					if(sixisdone == 0)
 					{	
 						levelSix();
+						;if(localStorage.getItem('unlockedLevel') < 5){localStorage.setItem('unlockedLevel', '5')};
 					}
-					else levelSeven();
+					else {levelSeven();;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')};}
 					
 					document.getElementById("5a").style.backgroundColor = "black";
+	
 				}
 				break;
 			case 502:
@@ -3308,8 +3385,9 @@
 					if(sixisdone == 0)
 					{	
 						levelSix();
+						;if(localStorage.getItem('unlockedLevel') <5){localStorage.setItem('unlockedLevel', '5')};
 					}
-					else levelSeven();
+					else {levelSeven();;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')};}
 					
 					document.getElementById("5b").style.backgroundColor = "black";
 				}
@@ -3322,8 +3400,9 @@
 					if(sixisdone == 0)
 					{	
 						levelSix();
+						;if(localStorage.getItem('unlockedLevel') < 5){localStorage.setItem('unlockedLevel', '5')};
 					}
-					else levelSeven();
+					else {levelSeven();;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')};}
 					
 					document.getElementById("5c").style.backgroundColor = "black";
 				}
@@ -3336,8 +3415,9 @@
 					if(sixisdone == 0)
 					{	
 						levelSix();
+						;if(localStorage.getItem('unlockedLevel') < 5){localStorage.setItem('unlockedLevel', '5')}
 					}
-					else levelSeven();
+					else {levelSeven();;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')};}
 					
 					document.getElementById("5d").style.backgroundColor = "black";
 				}
@@ -3351,8 +3431,9 @@
 					if(eightisdone == 0)
 					{	
 						levelEight();
+						;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}
 					}
-					else levelSevenF();
+					else {levelSevenF();;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}}
 					
 					document.getElementById("7a").style.backgroundColor = "black";
 				}
@@ -3365,8 +3446,9 @@
 					if(eightisdone == 0)
 					{	
 						levelEight();
+						;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}
 					}
-					else levelSevenF();
+					else {levelSevenF();;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}}
 					
 					document.getElementById("7b").style.backgroundColor = "black";
 				}
@@ -3379,8 +3461,9 @@
 					if(eightisdone == 0)
 					{	
 						levelEight();
+						;if(localStorage.getItem('unlockedLevel') < 8){localStorage.setItem('unlockedLevel', '8')}
 					}
-					else levelSevenF();
+					else {levelSevenF();;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}}
 					
 					document.getElementById("7c").style.backgroundColor = "black";
 				}
@@ -3393,8 +3476,9 @@
 					if(eightisdone == 0)
 					{	
 						levelEight();
+						;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}
 					}
-					else levelSevenF();
+					else {levelSevenF();;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}}
 					
 					document.getElementById("7d").style.backgroundColor = "black";
 				}
@@ -3407,8 +3491,9 @@
 					if(eightisdone == 0)
 					{	
 						levelEight();
+						;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}
 					}
-					else levelSevenF();
+					else {levelSevenF();;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}}
 					
 					document.getElementById("7e").style.backgroundColor = "black";
 				}
@@ -3422,8 +3507,10 @@
 					if(eightfisdone == 0)
 					{	
 						levelEightF();
+						;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}
+
 					}
-					else levelNineA();
+					else {levelNineA();;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}}
 					
 					document.getElementById("7fa").style.backgroundColor = "black";
 				}
@@ -3436,8 +3523,9 @@
 					if(eightfisdone == 0)
 					{	
 						levelEightF();
+						;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}
 					}
-					else levelNineA();
+					else {levelNineA();;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}}
 					
 					document.getElementById("7fb").style.backgroundColor = "black";
 				}
@@ -3450,8 +3538,9 @@
 					if(eightfisdone == 0)
 					{	
 						levelEightF();
+						;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}
 					}
-					else levelNineA();
+					else {levelNineA();;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}}
 					
 					document.getElementById("7fc").style.backgroundColor = "black";
 				}
@@ -3464,8 +3553,9 @@
 					if(eightfisdone == 0)
 					{	
 						levelEightF();
+						;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}
 					}
-					else levelNineA();
+					else {levelNineA();;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}}
 					
 					document.getElementById("7fd").style.backgroundColor = "black";
 				}
@@ -3478,8 +3568,9 @@
 					if(eightfisdone == 0)
 					{	
 						levelEightF();
+						;if(localStorage.getItem('unlockedLevel') < 7){localStorage.setItem('unlockedLevel', '7')}
 					}
-					else levelNineA();
+					else {levelNineA();;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}}
 					
 					document.getElementById("7fe").style.backgroundColor = "black";
 				}
@@ -3491,6 +3582,7 @@
 					levelNineB();
 					
 					document.getElementById("9aa").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}
 				}
 				break;
 			case 9012:
@@ -3499,6 +3591,7 @@
 					levelNineB();
 					
 					document.getElementById("9ab").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}
 				}
 				break;
 			case 9013:
@@ -3507,6 +3600,7 @@
 					levelNineB();
 					
 					document.getElementById("9ac").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}
 				}
 				break;
 
@@ -3516,6 +3610,7 @@
 					levelNineC();
 					
 					document.getElementById("9ba").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}
 				}
 				break;
 			case 9022:
@@ -3524,6 +3619,7 @@
 					levelNineC();
 					
 					document.getElementById("9bb").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}
 				}
 				break;
 			case 9023:
@@ -3532,6 +3628,7 @@
 					levelNineC();
 					
 					document.getElementById("9bc").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}
 				}
 				break;
 
@@ -3541,6 +3638,7 @@
 					levelNineD();
 					
 					document.getElementById("9ca").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}
 				}
 				break;
 			case 9032:
@@ -3549,6 +3647,7 @@
 					levelNineD();
 					
 					document.getElementById("9cb").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}
 				}
 				break;
 			case 9033:
@@ -3557,6 +3656,7 @@
 					levelNineD();
 					
 					document.getElementById("9cc").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 9){localStorage.setItem('unlockedLevel', '9')}
 				}
 				break;				
 				
@@ -3566,6 +3666,7 @@
 					levelTen();
 					
 					document.getElementById("9da").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 10){localStorage.setItem('unlockedLevel', '10')}
 				}
 				break;
 			case 9042:
@@ -3574,6 +3675,7 @@
 					levelTen();
 					
 					document.getElementById("9db").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 10){localStorage.setItem('unlockedLevel', '10')}
 				}
 				break;
 			case 9043:
@@ -3582,6 +3684,7 @@
 					levelTen();
 					
 					document.getElementById("9dc").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 10){localStorage.setItem('unlockedLevel', '10')}
 				}
 				break;	
 
@@ -3593,8 +3696,9 @@
 					if(elevenisdone == 0)
 					{	
 						levelEleven();
+						;if(localStorage.getItem('unlockedLevel') < 10){localStorage.setItem('unlockedLevel', '10')}
 					}
-					else levelTwelve();
+					else {levelTwelve();;if(localStorage.getItem('unlockedLevel') < 12){localStorage.setItem('unlockedLevel', '12')}}
 					
 					document.getElementById("10a").style.backgroundColor = "black";
 				}
@@ -3607,8 +3711,9 @@
 					if(elevenisdone == 0)
 					{	
 						levelEleven();
+						;if(localStorage.getItem('unlockedLevel') < 10){localStorage.setItem('unlockedLevel', '10')}
 					}
-					else levelTwelve();
+					else {levelTwelve();;if(localStorage.getItem('unlockedLevel') < 12){localStorage.setItem('unlockedLevel', '12')}}
 					
 					document.getElementById("10b").style.backgroundColor = "black";
 				}
@@ -3621,8 +3726,9 @@
 					if(elevenisdone == 0)
 					{	
 						levelEleven();
+						;if(localStorage.getItem('unlockedLevel') < 10){localStorage.setItem('unlockedLevel', '10')}
 					}
-					else levelTwelve();
+					else {levelTwelve();;if(localStorage.getItem('unlockedLevel') < 12){localStorage.setItem('unlockedLevel', '12')}}
 					
 					document.getElementById("10c").style.backgroundColor = "black";
 				}
@@ -3635,8 +3741,9 @@
 					if(elevenisdone == 0)
 					{	
 						levelEleven();
+						;if(localStorage.getItem('unlockedLevel') < 10){localStorage.setItem('unlockedLevel', '10')}
 					}
-					else levelTwelve();
+					else {levelTwelve();;if(localStorage.getItem('unlockedLevel') < 12){localStorage.setItem('unlockedLevel', '12')}}
 					
 					document.getElementById("10d").style.backgroundColor = "black";
 				}
@@ -3649,8 +3756,9 @@
 					if(elevenisdone == 0)
 					{	
 						levelEleven();
+						;if(localStorage.getItem('unlockedLevel') < 10){localStorage.setItem('unlockedLevel', '10')}
 					}
-					else levelTwelve();
+					else {levelTwelve();;if(localStorage.getItem('unlockedLevel') < 12){localStorage.setItem('unlockedLevel', '12')}}
 				
 					document.getElementById("10e").style.backgroundColor = "black";
 				}
@@ -3663,8 +3771,9 @@
 					if(elevenisdone == 0)
 					{	
 						levelEleven();
+						;if(localStorage.getItem('unlockedLevel') < 10){localStorage.setItem('unlockedLevel', '10')}
 					}
-					else levelTwelve();
+					else {levelTwelve();;if(localStorage.getItem('unlockedLevel') < 12){localStorage.setItem('unlockedLevel', '12')}}
 					
 					document.getElementById("10f").style.backgroundColor = "black";
 				}
@@ -3676,6 +3785,7 @@
 					levelThirteen();
 					
 					document.getElementById("12a").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 13){localStorage.setItem('unlockedLevel', '13')}
 				}
 				break;	
 			case 1202:
@@ -3684,6 +3794,7 @@
 					levelThirteen();
 					
 					document.getElementById("12b").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 13){localStorage.setItem('unlockedLevel', '13')}
 				}
 				break;	
 			case 1203:
@@ -3692,6 +3803,7 @@
 					levelThirteen();
 					
 					document.getElementById("12c").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 13){localStorage.setItem('unlockedLevel', '13')}
 				}
 				break;	
 			case 1204:
@@ -3700,6 +3812,7 @@
 					levelThirteen();
 					
 					document.getElementById("12d").style.backgroundColor = "black";
+					;if(localStorage.getItem('unlockedLevel') < 13){localStorage.setItem('unlockedLevel', '13')}
 				}
 				break;					
 		}
