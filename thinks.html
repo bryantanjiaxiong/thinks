@@ -5,8 +5,11 @@
 		<title>Think's</title>
 		<link rel="stylesheet" type="text/css" href="gamestyle.css">
 	</head>
-	<body> 
-		<div id="replace0"><div align="center"><button id="user-choice" style="margin-top: 300px;" onclick="onMobile()">Using Mobile</button><button id="user-choice" style="margin-top: 300px; margin-left: 36px;" onclick="onPC()">Using Computer</button></div></div>
+	<body onload="initialisePage()"> 
+		<div id="replace0">
+			<!-- <div align="center"><button id="user-choice" style="margin-top: 300px;" onclick="onMobile()">Using Mobile</button><button id="user-choice" style="margin-top: 300px; margin-left: 36px;" onclick="onPC()">Using Computer</button></div> -->
+		</div>
+		<p id="message" style="margin-top: 300px;">Thinking...</p>
 		<div id="thegrid" style="display: grid; grid-template-columns: 3fr 3fr 2fr; margin-left: 20%;"> 
 		<!-- <div style="display: grid; grid-template-columns: 1fr 1fr;" align="center"----- shitcode ------>
 			<div id="replace" align="center"></div>
@@ -45,14 +48,35 @@
 		}
 	}, 500);
 
-	function onMobile()
+	async function initialisePage()
 	{
+		let device = localStorage.getItem("device");
+		document.getElementById("message").style.display = "block";
+		await delay(3000); // 10 seconds
+		
+		if (device === "mobile")
+		{
+			onMobile();
+		}
+		else if (device === "PC")
+		{
+			onPC();
+		}
+	}
+	function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	function onMobile()
+	{	
+		document.getElementById("message").style.display = "none";
 		document.getElementById("thegrid").style.gridTemplateColumns = "300px 300px 300px";
 		document.getElementById("replace0").innerHTML = "<div align=\"center\"><button style=\"margin-top: 300px;\" id=user-choice onclick=\"levelOne()\">Start Game</button></div>";
 	}
 	
 	function onPC()
 	{
+		document.getElementById("message").style.display = "none";
 		document.getElementById("thegrid").style.gridTemplateColumns = "300px 300px 300px";
 		document.getElementById("replace0").innerHTML = "<div align=\"center\"><button style=\"margin-top: 300px;\" id=user-choice onclick=\"levelOne()\">Start Game</button></div>";
 	}

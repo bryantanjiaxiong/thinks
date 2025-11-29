@@ -8,6 +8,14 @@
 	</head>
 	<body> 
 		<div id="replace0"><div align="center"><button id="user-choice" style="margin-top: 300px;" onclick="onMobile()">Using Mobile</button><button id="user-choice"onclick="onPC()">Using Computer</button></div></div>
+
+		<div id="consent-popup" style="display:none; position:fixed; z-index:9999; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #ccc; padding:20px; box-shadow:0 -2px 8px rgba(0,0,0,0.1);">
+        <span>
+            This site uses Google Analytics to understand how visitors interact. By continuing, you consent to this use. 
+            <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Learn more</a>.
+        </span>
+        <button id="consent-accept" class="level-button">Accept</button>
+    	</div>
 		
 		<div id="thegrid" style="display: grid; grid-template-columns: 3fr 3fr 2fr; margin-left: 20%;">
 			<div id="replace" align="center"></div>
@@ -20,6 +28,7 @@
 			
 			<div id="levelpanel" style="align: right;"></div>
 		</div>	
+		 <script src="GA.js"></script>
 	</body>
 </html>
 <script>
@@ -28,14 +37,30 @@
 	var jumps;
 
 	function onMobile()
-	{
+	{	
+		if (gameenabled){
 		document.getElementById("thegrid").style.gridTemplateColumns = "300px 300px 300px";
-		document.getElementById("replace0").innerHTML = "<div align=\"center\" style=\"margin-top: 200px;\"><button id=user-choice onclick=\"tutorial()\" style=\"margin-right: 20px;\">Start Tutorial</button><a href=\"thinks.html\" ><button id=user-choice>Skip Tutorial</button></a></div>";
+		document.getElementById("replace0").innerHTML = "<div align=\"center\" style=\"margin-top: 200px;\"><button id=user-choice onclick=\"tutorial()\" style=\"margin-right: 20px;\">Start Tutorial</button><a><button id=user-choice onclick=\"startgame()\">Skip Tutorial</button></a></div>";
+		localStorage.setItem("device", "mobile");
+		}
+		else {
+			alert("Please agree to the use of cookies to play the game.");
+		}
+	}
+
+	function startgame(){
+		window.location.href = "thinks.html";
 	}
 	
 	function onPC()
 	{
-		document.getElementById("replace0").innerHTML = "<div align=\"center\" style=\"margin-top: 200px;\"><button id=user-choice onclick=\"tutorial()\" style=\"margin-right: 20px;\">Start Tutorial</button><a href=\"thinks.html\" ><button id=user-choice>Skip Tutorial</button></a></div>";
+		if (gameenabled){
+		document.getElementById("replace0").innerHTML = "<div align=\"center\" style=\"margin-top: 200px;\"><button id=user-choice onclick=\"tutorial()\" style=\"margin-right: 20px;\">Start Tutorial</button><a><button id=user-choice onclick=\"startgame()\">Skip Tutorial</button></a></div>";
+		localStorage.setItem("device", "PC");
+		}
+		else{
+			alert("Please agree to the use of cookies to play the game.");
+		}
 	}
 
 	function makeboard()
