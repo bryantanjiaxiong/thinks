@@ -1,5 +1,5 @@
 body{background-color:#d9b382; align-items: center;  display: flex;
-    flex-direction: column;}
+    flex-direction: column; font-family: Arial, Helvetica, sans-serif;padding-bottom: 15%;}
 #user-choice{
     background-color: white;
     height: 100px;
@@ -30,101 +30,9 @@ body{background-color:#d9b382; align-items: center;  display: flex;
 }
 #thegrid{
     margin-left: 35%;
-}
-@media screen and (max-width: 700px) {
-    button {
-        font-size: 25px;
-        height: 80px;
-    } 
-    #button-container {
-        flex-direction: column;
-    } 
-    #gameframe{
-        flex-direction: column;
-        align-items: center;
-    }
-    #user-choice{
-        font-size: x-large;;
-    }
-}
-@media screen and (max-width: 800px) {
-    button {
-        font-size: 25px;
-        height: 80px;
-    }  
-    #button-container {
-        flex-direction: column;
-    } 
-    #gameframe{
-        flex-direction: column;
-        align-items: center;
-        margin-left: 63vh
-    }
-    #user-choice{
-        font-size: x-large;;
-    }
-
-}
-@media screen and (max-width: 1100px) {
-    button {
-        font-size: 100px;
-        height: 80px;
-    }  
-    #button-container {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin: 5vh ;
-    } 
-    #gameframe{
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin: 5vh;
-        height: 20vh;
-        padding-top: 10vh;
-    }
-    #user-choice{
-        font-size: xx-large;;
-    }
-    label{
-        font-size: 50px;
-    }
-    #replace{
-        font-size: xx-large;
-        width: 20vh;
-        align-items: center;
-        justify-content: center;
-    }
-    #thepictureforimitation{
-        font-size: xx-large;
-        width: 20vh;
-        align-items: center;
-        justify-content: center;
-
-    }
-    #instructionsright{
-        font-size: xx-large;
-        width: 20vh;
-        align-items: center;
-        justify-content: center;
-    }
-    #chessboard {
-                width: 200px;
-                height: 200px;
-                margin: 20px;
-                border: 4px solid #333;
-    }
-    #picboard {
-                width: 200px;
-                height: 200px;
-                border: 4px solid #333;
-    }
-    .circle{
-        height:60px;
-        width:60px;
-    }
-    
+    margin-top:  5vh;
+    margin-bottom: 15%;
+    flex: 1; 
 }
 
 #user-choice:hover{
@@ -142,7 +50,13 @@ body{background-color:#d9b382; align-items: center;  display: flex;
 .levelbutton {background-color: white; height: 20px; width: 20px; outline: none; border-radius: 50%;}
 #levelpanel {opacity: 0; transition: opacity 3s ease;}
 #levelpanel:hover {opacity: 1;}
-
+#instructionsright{
+        font-size: 100%;
+        width: 100%;
+        /* font-weight: bold   ; */
+        align-items: center ;
+        justify-content: center;
+    }
 #chessboard {
                 width: 84px;
                 height: 84px;
@@ -155,17 +69,16 @@ body{background-color:#d9b382; align-items: center;  display: flex;
                 height: 84px;
                 border: 4px solid #333;
             }
-            
-.beige		{
-                float: left;
-                width: 40px;
-                height: 40px;
-                background-color: #d9b382;
-                text-align:center;
-                display: table-cell;
-                vertical-align:middle;
-                border: 1px black solid;
-            }	
+.beige{
+        float: left;
+        width: 40px;
+        height: 40px;
+        background-color: #d9b382; 
+        text-align:center;
+        display: table-cell;
+        vertical-align:middle;
+        border: 1px black solid;
+    }	        
             	
 #bar{
     bottom: 0% ;
@@ -217,4 +130,172 @@ body{background-color:#d9b382; align-items: center;  display: flex;
 .level-button:hover {
     background-color: #0e8bff;
     color: black;
+}
+
+/* General Mobile Adjustments */
+@media screen and (max-width: 700px) {
+    button {
+        font-size: 25px;
+        height: 80px;
+    }  
+    #button-container {
+        flex-direction: column;
+    } 
+    .beige{
+        float: left;
+        width: 80px;
+        height: 80px;
+        background-color: #d9b382; 
+        text-align:center;
+        display: table-cell;
+        vertical-align:middle;
+        border: 1px black solid;
+    }	
+    #gameframe{
+        flex-direction: column;
+        align-items: center;
+        margin-left: 108vh
+    }
+    #user-choice{
+        font-size: x-large;;
+    }
+    #replace{
+        font-size: xx-large;
+        width: 20vh;
+        align-items: center;
+        justify-content: center;
+    }
+    .circle{
+        height:60px;
+        width:60px;
+    }
+    
+
+}
+
+@media screen and (max-width: 800px) {
+    button {
+        font-size: 25px;
+        height: 80px;
+    }  
+    #button-container {
+        flex-direction: column;
+    } 
+    .beige{
+        float: left;
+        width: 80px;
+        height: 80px;
+        background-color: #d9b382; 
+        text-align:center;
+        display: table-cell;
+        vertical-align:middle;
+        border: 1px black solid;
+    }	
+    #gameframe{
+        flex-direction: column;
+        align-items: center;
+        margin-left: 108vh
+    }
+    #user-choice{
+        font-size: x-large;;
+    }
+    #replace{
+        font-size: xx-large;
+        width: 20vh;
+        align-items: center;
+        justify-content: center;
+    }
+    .circle{
+        height:60px;
+        width:60px;
+    }
+    
+
+}
+@media screen and (max-width: 1100px) {
+    button {
+        font-size: 100px;
+        height: 80px;
+    }  
+    #button-container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 5vh ;
+        padding-bottom: 20%;
+    } 
+    #gameframe{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 5vh;
+        height: 20vh;
+        padding-top: 10vh;
+    }
+    #user-choice{
+        font-size: xx-large;;
+    }
+    label{
+        font-size: 50px;
+    }
+    #replace{
+        font-size: xx-large;
+        width: 20vh;
+        align-items: center;
+        justify-content: center;
+    }
+    #thepictureforimitation{
+        font-size: xx-large;
+        width: 20vh;
+        align-items: center;
+        justify-content: center;
+
+    }
+    #instructionsleft{
+        font-size: 100%;
+        width: 100%;
+        font-weight: bold   ;
+        /* align-items: center; */
+        /* justify-content: center; */
+    }
+    #instructionsright{
+        font-size: 100%;
+        width: 100%;
+        font-weight: bold   ;
+        align-items: center ;
+        justify-content: center;
+        max-height: calc(100vh - 15%); /* Prevent it from exceeding the viewport height minus the bar */
+        overflow-y: auto;
+    }
+    #chessboard {
+                width: 200px;
+                height: 200px;
+                margin: 20px;
+                border: 4px solid #333;
+    }
+    #picboard {
+                width: 200px;
+                height: 200px;
+                border: 4px solid #333;
+    }
+    .circle{
+        height:60px;
+        width:60px;
+    }
+    .beige		{
+                float: left;
+                width: 80px;
+                height: 80px;
+                background-color: #d9b382;
+                text-align:center;
+                display: table-cell;
+                vertical-align:middle;
+                border: 1px black solid;
+            }	
+    .circleInstructions {
+        height: 60px;
+        width: 60px;
+        outline: none;
+        border-radius: 50%;
+    }
 }

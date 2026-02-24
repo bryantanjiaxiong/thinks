@@ -23,6 +23,14 @@ function setGameEnabled(enabled) {
     else{
         gameenabled = false;
     }
+    const buttons = document.querySelectorAll('#user-choice');
+    buttons.forEach(btn => {
+        if (btn.id !== 'consent-accept') {
+            btn.disabled = !enabled;
+            btn.style.opacity = enabled ? '1' : '0.5';
+            btn.style.pointerEvents = enabled ? 'auto' : 'none';
+        }
+    });
 }
 
 function showConsentPopup() {
@@ -40,7 +48,13 @@ function acceptConsent() {
     setGameEnabled(true);
     loadGA();
 }
+function rejectConsent() {
+    localStorage.setItem('ga_consent', 'false');
+    document.getElementById('consent-popup').style.display = 'none';
+    setGameEnabled(true);
+}
 document.addEventListener('DOMContentLoaded', function() {
     showConsentPopup();
     document.getElementById('consent-accept').onclick = acceptConsent;
+    document.getElementById('consent-reject').onclick = rejectConsent;
 });
