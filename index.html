@@ -1,331 +1,43 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8"> 
-		<title>Think's</title>
-		<link rel="stylesheet" type="text/css" href="styles.css">
-		<link rel="icon" type="image/x-icon" href="./favicon.ico" />
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-5YGZ8K86JH"></script>
-		<script>
-		  window.dataLayer = window.dataLayer || [];
-		  function gtag(){dataLayer.push(arguments);}
-		  gtag('js', new Date())
-		  gtag('config', 'G-5YGZ8K86JH');
-		</script>
-	</head>
-	<body> 
-		<div id="replace0">
-			<div id= "button-container">
-				<button id="user-choice" onclick="onMobile()">Using Mobile</button>
-				<button id="user-choice"onclick="onPC()">Using Computer</button>
-			</div>
-		</div>
-
-		<div id="consent-popup" style="display:none; position:fixed; z-index:9999; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #ccc; padding:20px; box-shadow:0 -2px 8px rgba(0,0,0,0.1);">
-        <span>
-            This site uses Google Analytics to understand how visitors interact. By continuing, you consent to this use. 
-            <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Learn more</a>.
-        </span>
-        <button id="consent-accept" class="level-button">Accept</button>
-		<button id="consent-reject" class="level-button">Reject</button>
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>Think's</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="game.js"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-5YGZ8K86JH"></script>
+	<script src="GA.js"></script>
+</head>
+<body onload="initialisePage()"> 
+	<div id="replace0"></div>
+	<div id="consent-popup" style="display:none; position:fixed; z-index:9999; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #ccc; padding:20px; box-shadow:0 -2px 8px rgba(0,0,0,0.1);">
+	<span>
+		This site uses Google Analytics to understand how visitors interact. By continuing, you consent to this use. 
+		<a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Learn more</a>.
+	</span>
+	<button id="consent-accept" class="level-button">Accept</button>
+	<button id="consent-reject" class="level-button">Reject</button>
     	</div>
-		
-		<div id="thegrid" style="display: grid; grid-template-columns: 3fr 3fr 2fr;">
-			<div id="gameframe" align="center">
-				<div id="replace" ></div>
+	<div id="gameframe">
+		<div id="replace"></div>
+		<div id="thepictureforimitation"></div>
+	</div>
+	<div id="circleInstructions"></div>
+	<div id="instructions"></div>
+	<div id="jumpcount"></div>
+
+	<div id="bar">
+		<label>Our partners:</label>
+		<a class="nav-item" href="https://dyllontjj.wixsite.com/dyta/">
+			<img src="./D.jpg">
+		</a>
+		<a class="nav-item" href="https://myprr.com.my">
+			<img src="./PRR logo.png">
+		</a>
 			
-				<div id="thepictureforimitation">
-					
-				</div>
-				
-				<!-- <div id="instructionsright" ></div> -->
-			</div>
+	</div>
 
-			<div id="levelpanel" "align: right;"></div>
-		</div>	
-		<div id="bar">
-        <label>Our partners:</label>
-        <a href="https://dyllontjj.wixsite.com/dyta/">
-            <img src="./D.jpg">
-        </a>
-        <a href="https://myprr.com.my">
-            <img src="./PRR logo.png">
-        </a>
-    	</div>
-		 <script src="GA.js"></script>
-	</body>
+
+</body>
 </html>
-<script>
-	let i;
-	var z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
-	var jumps;
-
-	function onMobile()
-	{	
-		if (gameenabled){
-		document.getElementById("thegrid").style.gridTemplateColumns = "300px 300px 300px";
-		document.getElementById("replace0").innerHTML = "<div id=\"button-container\" ><button id=user-choice onclick=\"tutorial()\" >Start Tutorial</button><a><button id=user-choice onclick=\"startgame()\">Skip Tutorial</button></a></div>";
-		localStorage.setItem("device", "mobile");
-		}
-		else {
-			alert("Please agree to the use of cookies to play the game.");
-		}
-	}
-
-	function startgame(){
-		window.location.href = "thinks.html";
-	}
-	
-	function onPC()
-	{
-		if (gameenabled){
-		document.getElementById("replace0").innerHTML = "<div align=\"center\" style=\"margin-top: 200px;\"><button id=user-choice onclick=\"tutorial()\" style=\"margin-right: 20px;\">Start Tutorial</button><a><button id=user-choice onclick=\"startgame()\">Skip Tutorial</button></a></div>";
-		localStorage.setItem("device", "PC");
-		}
-		else{
-			alert("Please agree to the use of cookies to play the game.");
-		}
-	}
-
-	function makeboard()
-	{
-		i = 0;
-		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
-		
-		document.getElementById("replace0").innerHTML = "<a href=\"thinks.html\"><button id=user-choice>Skip Tutorial</button></a>";
-
-		if (localStorage.getItem("device") == "mobile"){
-			document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 247px; height: 247px\"></div><div id=\"instructionsleft\"></div>";
-			document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\" style=\"width: 247px; height: 247px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
-			+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"instructionsright\"></div><div style=\"margin-top: 30px;\">";
-		}
-		else{
-		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 126px; height: 126px\"></div><div id=\"instructionsleft\"></div>";
-		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\" style=\"width: 126px; height: 126px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
-		+"<div style=\"margin-top: 50px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"instructionsright\"></div><div style=\"margin-top: 30px;\">";
-		}
-		
-		for(var x=0; x<3; x++)
-		{
-			for(var y=0; y<3; y++)
-			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\"></button></div>";
-			}	
-		}
-	}
-	
-	function makeboard1()
-	{
-		jumps = 1;
-		i = 0;
-		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
-	
-		// document.getElementById("instructionsright").innerHTML = "";
-		if(localStorage.getItem("device") == "mobile")
-		{
-			document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 247px; height: 247px\"></div><div id=\"instructionsleft\"></div>";
-			document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 247px; height: 247px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
-			+"<div style=\"margin-top: 50px; margin-bottom: 15px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div><div id=\"instructionsright\"></div></div>";
-		}
-		else{
-		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 126px; height: 126px\"></div><div id=\"instructionsleft\"></div>";
-		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 126px; height: 126px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div></div>"
-		+"<div style=\"margin-top: 50px; margin-bottom: 15px;\"><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"jumpcount\" style=\"margin-top: 15px; margin-bottom: 30px;\">Jump: " + jumps + "</div><div id=\"instructionsright\"></div></div>";
-		}
-		
-		for(var x=0; x<3; x++)
-		{
-			for(var y=0; y<3; y++)
-			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\"></button></div>";
-			}	
-		}
-	}
-	
-	function makeboard2()
-	{
-		i = 0;
-		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
-	
-		// document.getElementById("instructionsright").innerHTML = "";
-		if (localStorage.getItem("device") == "mobile"){document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 247px; height: 247px\"></div><div id=\"instructionsleft\">Let us try something else.</div>";
-		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 247px; height: 247px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
-		+"<div style=\"margin-top: 50px; margin-bottom: 15px;\"><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"instructionsright\"></div></div>";
-		}
-		
-		else{
-		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 126px; height: 126px\"></div><div id=\"instructionsleft\">Let us try something else.</div>";
-		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 126px; height: 126px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
-		+"<div style=\"margin-top: 50px; margin-bottom: 15px;\"><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"instructionsright\"></div></div>";
-		}
-		for(var x=0; x<3; x++)
-		{
-			for(var y=0; y<3; y++)
-			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\"></button></div>";
-			}	
-		}
-	}
-	
-	function makeboardfinal()
-	{
-		i = 0;
-		z = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]];
-	
-		document.getElementById("replace0").innerHTML = "<button id=user-choice onclick=\"cleartheboard()\">CLEAR</button><button id=user-choice onclick=\"tutorial()\" >Repeat Tutorial</button>";
-		document.getElementById("instructionsright").innerHTML = "";
-		if(localStorage.getItem("device") == "mobile")
-		{
-			document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 247px; height: 247px\"></div><div id=\"instructionsleft\">Now it is your turn:<br>Fill the squares to match the picture,<br><br>If you made a mistake,<br>There is a CLEAR button at the top-left corner.<br></div>";
-			document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 247px; height: 247px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
-			+"<div style=\"margin-top: 50px; margin-bottom: 15px;\"><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"instructionsright\"></div></div>";
-		}
-		else{
-		document.getElementById("replace").innerHTML = "<div id=\"chessboard\" style=\"width: 126px; height: 126px\"></div><div id=\"instructionsleft\">Now it is your turn:<br>Fill the squares to match the picture.<br><br>If you made a mistake,<br>There is a CLEAR button at the top-left corner.<br></div>";
-		document.getElementById("thepictureforimitation").innerHTML = "<div style=\"padding-top: 20px;\"><div id=\"picboard\"  style=\"width: 126px; height: 126px\"><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: white\"></button></div><div class=\"beige\"><button class=\"circle\" style=\"background-color: black\"></button></div></div>"
-		+"<div style=\"margin-top: 50px; margin-bottom: 15px;\"><button class=\"circleInstructions\" style=\"background-color: black;\"></button><button class=\"circleInstructions\" style=\"background-color: white;\"></button><button class=\"circleInstructions\" style=\"background-color: black;\"></button></div><div id=\"instructionsright\"></div></div>";
-		}
-		for(var x=0; x<3; x++)
-		{
-			for(var y=0; y<3; y++)
-			{
-				document.getElementById("chessboard").innerHTML += "<div class=\"beige\"><button class=\"circle\" id=\"box[" + x + "][" + y + "]\" onclick=\"returnpieceBWB(" + x + "," + y + ", 1)\"></button></div>";
-			}	
-		}
-	}		
-	
-	function tutorial()
-	{		
-		setTimeout(makeboard, 0);
-		setTimeout(function(){ document.getElementById("instructionsleft").innerHTML = "Generally,<br>The Adjacent Rule:<br>You can only fill squares adjacent to the previous one you filled,<br>Given that you have already filled one."; }, 1000);
-		setTimeout(function(){ document.getElementById("box[0][0]").style.backgroundColor = "white"; }, 7500);
-		setTimeout(function(){ document.getElementById("box[0][1]").style.backgroundColor = "black"; }, 8000);
-		setTimeout(function(){ document.getElementById("box[0][2]").style.backgroundColor = "white"; }, 8500);
-		setTimeout(function(){ document.getElementById("box[1][2]").style.backgroundColor = "black"; }, 9000);
-		setTimeout(function(){ document.getElementById("box[1][1]").style.backgroundColor = "white"; }, 9500);
-		setTimeout(function(){ document.getElementById("box[1][0]").style.backgroundColor = "black"; }, 10000);
-		setTimeout(function(){ document.getElementById("box[2][0]").style.backgroundColor = "white"; }, 10500);
-		setTimeout(function(){ document.getElementById("box[2][1]").style.backgroundColor = "black"; }, 11000);
-		setTimeout(function(){ document.getElementById("box[2][2]").style.backgroundColor = "white"; }, 11500);
-		
-		setTimeout(makeboard, 14000);
-		setTimeout(function(){ document.getElementById("instructionsleft").innerHTML = "In any way."; }, 15000);
-		setTimeout(function(){ document.getElementById("box[0][0]").style.backgroundColor = "white"; }, 18500);
-		setTimeout(function(){ document.getElementById("box[1][0]").style.backgroundColor = "black"; }, 19000);
-		setTimeout(function(){ document.getElementById("box[2][0]").style.backgroundColor = "white"; }, 19500);
-		setTimeout(function(){ document.getElementById("box[2][1]").style.backgroundColor = "black"; }, 20000);
-		setTimeout(function(){ document.getElementById("box[2][2]").style.backgroundColor = "white"; }, 20500);
-		setTimeout(function(){ document.getElementById("box[1][2]").style.backgroundColor = "black"; }, 21000);
-		setTimeout(function(){ document.getElementById("box[1][1]").style.backgroundColor = "white"; }, 21500);
-		setTimeout(function(){ document.getElementById("box[0][1]").style.backgroundColor = "black"; }, 22000);
-		setTimeout(function(){ document.getElementById("box[0][2]").style.backgroundColor = "white"; }, 22500);
-		
-		setTimeout(function(){ document.getElementById("instructionsright").innerHTML = "As long as the boxes you are filling match the picture,<br>While using the pattern which is now:<br><br>White then Black then White then Black,<br>In repetition."; }, 25500);
-		
-		setTimeout(makeboard, 31000);
-		setTimeout(function(){ document.getElementById("box[1][1]").style.backgroundColor = "white"; }, 32500);
-		setTimeout(function(){ document.getElementById("box[1][2]").style.backgroundColor = "black"; }, 33000);
-		setTimeout(function(){ document.getElementById("box[2][2]").style.backgroundColor = "white"; }, 33500);
-		setTimeout(function(){ document.getElementById("box[2][1]").style.backgroundColor = "black"; }, 34000);
-		setTimeout(function(){ document.getElementById("box[2][0]").style.backgroundColor = "white"; }, 34500);
-		setTimeout(function(){ document.getElementById("box[1][0]").style.backgroundColor = "black"; }, 35000);
-		setTimeout(function(){ document.getElementById("box[0][0]").style.backgroundColor = "white"; }, 35500);
-		setTimeout(function(){ document.getElementById("box[0][1]").style.backgroundColor = "black"; }, 36000);
-		setTimeout(function(){ document.getElementById("box[0][2]").style.backgroundColor = "white"; }, 36500);
-
-		setTimeout(makeboard1, 39000);
-		setTimeout(function(){ document.getElementById("instructionsleft").innerHTML = "Let us set a different picture."; }, 39500);
-		setTimeout(function(){ document.getElementById("instructionsright").innerHTML = "Imitating this picture,<br>You can never fill all the squares with just The Adjacent Rule.<br><br>"; }, 42000);	
-		setTimeout(function(){ document.getElementById("box[0][0]").style.backgroundColor = "white"; }, 47500);
-		setTimeout(function(){ document.getElementById("box[1][0]").style.backgroundColor = "black"; }, 48000);
-		setTimeout(function(){ document.getElementById("box[2][0]").style.backgroundColor = "white"; }, 48500);
-		setTimeout(function(){ document.getElementById("box[2][1]").style.backgroundColor = "black"; }, 49000);
-		setTimeout(function(){ document.getElementById("box[2][2]").style.backgroundColor = "white"; }, 49500);
-		setTimeout(function(){ document.getElementById("box[1][2]").style.backgroundColor = "black"; }, 50000);
-		setTimeout(function(){ document.getElementById("box[0][2]").style.backgroundColor = "white"; }, 50500);
-		setTimeout(function(){ document.getElementById("instructionsright").innerHTML += "Now you are stuck.<br><br>"; }, 54000);
-		setTimeout(function(){ document.getElementById("instructionsright").innerHTML = "Jumping:<br>Note the amount of \"Jump\"s you have.<br>For a specific amount of times,<br>They allow you to fill an unadjacent square,<br>And then you can continue the Adjacent Rule from that sqaure."; }, 58000);
-		setTimeout(function(){ document.getElementById("instructionsright").innerHTML = "Use them wisely,<br>Challenge yourself to not use them up.<br><br>"; }, 66000);
-		setTimeout(function(){ document.getElementById("instructionsright").innerHTML = "In this case we are forced to use one.<br>Note that the pattern still continues,<br>So the next one will be Black."; }, 70000);
-		setTimeout(function(){ document.getElementById("box[1][1]").style.backgroundColor = "black"; document.getElementById("jumpcount").innerHTML = "Jump: " + --jumps;}, 74000);
-		setTimeout(function(){ document.getElementById("box[0][1]").style.backgroundColor = "white"; }, 74500);
-		
-		setTimeout(makeboard2, 77000);
-		setTimeout(function(){ document.getElementById("instructionsright").innerHTML = "We have the pattern Black White Black now,<br>With no jumps.<br><br>"; }, 82000);
-		setTimeout(function(){ document.getElementById("instructionsright").innerHTML += "You have ten seconds.<br>Find a pattern.<br><br>"; }, 84000);
-		setTimeout(function(){ document.getElementById("instructionsleft").innerHTML = "There are a few ways,<br>This is one."; }, 94500);
-		setTimeout(function(){ document.getElementById("box[1][1]").style.backgroundColor = "black"; }, 96000);
-		setTimeout(function(){ document.getElementById("box[1][0]").style.backgroundColor = "white"; }, 96500);
-		setTimeout(function(){ document.getElementById("box[0][0]").style.backgroundColor = "black"; }, 97000);
-		setTimeout(function(){ document.getElementById("box[0][1]").style.backgroundColor = "black"; }, 97500);
-		setTimeout(function(){ document.getElementById("box[0][2]").style.backgroundColor = "white"; }, 98000);
-		setTimeout(function(){ document.getElementById("box[1][2]").style.backgroundColor = "black"; }, 98500);
-		setTimeout(function(){ document.getElementById("box[2][2]").style.backgroundColor = "black"; }, 99000);
-		setTimeout(function(){ document.getElementById("box[2][1]").style.backgroundColor = "white"; }, 99500);
-		setTimeout(function(){ document.getElementById("box[2][0]").style.backgroundColor = "black"; }, 100000);
-		
-		setTimeout(makeboardfinal, 105000);
-	}
-	
-	function returnpieceBWB(a, b, level)
-	{
-		if(i==0)
-		{
-			if(z[a][b] == 0)
-			{
-B      
-			
-				i++;
-				
-				p = a;
-				q = b;
-			}
-		}	
-		else if(i>0)
-		{
-			if(z[a][b] == 0 && ((a == (p-1) && b == q) || (a == (p+1) && b == q) || (b == (q-1) && a == p) || (b == (q+1) && a == p)))
-			{
-				if((i%3) == 1)
-				{
-					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "white";
-					z[a][b] = 1;
-				}
-				else if((i%3) == 0 || (i%3) == 2)
-				{
-					document.getElementById("box[" + a + "][" + b + "]").style.backgroundColor = "black";
-					z[a][b] = 2;
-				}
-			
-				i++;
-				
-				p = a;
-				q = b;
-			}
-		}	
-		
-		checkboxes(level);
-	}
-
-	function cleartheboard()
-	{
-		document.getElementById("replace").innerHTML = "<div id=\"chessboard\"></div>";
-
-		makeboardfinal();
-	}
-	
-	function checkboxes(lvl)
-	{
-		switch(lvl)
-		{
-			case 1:
-				if(z[0][0] == 2 && z[0][1] == 2 && z[0][2] == 1 && z[1][0] == 1 && z[1][1] == 2 && z[1][2] == 2 && z[2][0] == 2 && z[2][1] == 1 && z[2][2] == 2)
-				{
-					document.getElementById("replace0").innerHTML = "<div align=\"center\" style=\"margin-top: 300px;\"><a href=\"thinks.html\"><button>Finish Tutorial</button></a></div></div>";
-					document.getElementById("replace").innerHTML = "";
-					document.getElementById("thepictureforimitation").innerHTML = "";
-				}
-				break;
-		}
-	}
-</script>
-
