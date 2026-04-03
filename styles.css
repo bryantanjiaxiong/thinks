@@ -53,7 +53,6 @@ body{background-color:#d9b382; align-items: center;  display: flex;
 #instructionsright{
         font-size: 100%;
         width: 100%;
-        /* font-weight: bold   ; */
         align-items: center ;
         justify-content: center;
     }
