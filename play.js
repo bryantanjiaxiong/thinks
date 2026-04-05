@@ -205,7 +205,6 @@ function checkWinCondition() {
 
     if (isWin) {
         setTimeout(() => {
-            alert("Success!");
             progressLevel();
         }, 200);
     }
