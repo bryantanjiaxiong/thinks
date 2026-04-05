@@ -35,7 +35,7 @@ body {
     cursor: pointer;
     background-color: #d9b382; /* Default state 
 } */
-.circleInstructions {width: 75%; height: 75%; outline: none; border-radius: 50%;} 
+.circleInstructions {width: 5vh; height: 5vh; outline: none; border-radius: 50%;} 
 .levelbutton {background-color: white; height: 20px; width: 20px; outline: none; border-radius: 50%;} 
 #levelpanel {
     border-left: 2px solid #333;
