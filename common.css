@@ -175,8 +175,7 @@ body {
     body {
         padding-bottom: 100px /* matches #bar height */
     }
-    img {width: 10vh; height: 10vh;}
-    #gameframe { flex-direction: column; align-items: center; }
+    #gameframe { flex-direction: row; align-items: center; }
     #instructions { font-size: 1.2rem; padding: 10px; text-align: center; }
     #levelpanel {
     border-left: 2px solid #333;
@@ -188,16 +187,17 @@ body {
     position: relative ;
     }
     .level-selection-grid{max-height: 30vh;}
+    #bar img {width: 9vh; height: 9vh;}
+
 }
 
 @media (max-width: 768px) {
     :root {
-        --board-size: 100px; /* Mobile */
+        --board-size: 126px; /* Mobile */
     }
     body {
         padding-bottom: 100px /* matches #bar height */
     }
-    img {width: 10vh; height: 10vh;}
     #gameframe { flex-direction: column; align-items: center; }
     #instructions { font-size: 1.2rem; padding: 10px; text-align: center; }
     #levelpanel {
@@ -210,6 +210,8 @@ body {
     position: relative ;
     }
     .level-selection-grid{max-height: 30vh;}
+    #bar img {width: 8vh; height: 8vh;}
+
 }
 
 /* Responsive Scaling for Mobile */
