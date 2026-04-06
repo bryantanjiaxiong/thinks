@@ -125,6 +125,16 @@ function showLevelPanel() {
     
     panel.innerHTML = html;
     panel.style.opacity = "1";
+
+    // Indicate current level 
+    if (currentLevelId) {
+        const currentBtn = document.getElementById(`btn-${currentLevelId}`);
+        if (currentBtn) {
+            currentBtn.style.border = "3px solid #02060b";
+            currentBtn.style.backgroundColor = "#ffffff";
+            currentBtn.style.color = "#333";
+        }
+    }
     
     disableLockedLevels();
 }

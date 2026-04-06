@@ -24,6 +24,7 @@ function loadLevel(levelId = "1a") {
 
     // Reset State
     currentLevelId = levelId;
+    showLevelPanel();
     currentLevelConfig = config;
     resetBoardData();
     availableJumps = config.jumps || 0;
@@ -208,6 +209,9 @@ function checkWinCondition() {
             progressLevel();
         }, 200);
     }
+    else if (currentI >= currentLevelConfig.size * currentLevelConfig.size) {
+        loadLevel(currentLevelId); // Reset current level on failed attempt
+    }
 }
 
 function progressLevel() {
@@ -221,8 +225,10 @@ function progressLevel() {
     if (currentIndex >= unlockedIndex) {
         localStorage.setItem('unlockedIndex', (currentIndex + 1).toString());
     }
+    const nextLevelId = allIds[currentIndex + 1];
 
     if (typeof showLevelPanel === "function") showLevelPanel();
+    loadLevel(nextLevelId.toString());
 }
 
 

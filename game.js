@@ -197,7 +197,7 @@ function updatePatternIndicator(patternType) {
     let html = `<div style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-bottom: 10px;">`;
     colors.forEach(val => {
         let bg = (val === 1) ? "white" : "black";
-        html += `<div style="width: 25px; height: 25px; border-radius: 50%; border: 2px solid #333; background-color: ${bg};"></div>`;
+        html += `<div style="width: 25px; height: 25px; margin-top: 10px; border-radius: 50%; border: 2px solid #333; background-color: ${bg};"></div>`;
     });
     html += `</div>`;
     container.innerHTML = html;
@@ -209,7 +209,7 @@ function makeboard(levelType,patternType) {
     resetBoardData();
     updatePatternIndicator(patternType);
     let isMobile = localStorage.getItem("device") === "mobile";
-    let size = isMobile ? "247px" : "126px";
+    let size = isMobile ? "150px" : "126px";
     let refArea = document.getElementById("thepictureforimitation");
     let boardArea = document.getElementById("replace");
 
@@ -278,6 +278,8 @@ function tutorial() {
     setTimeout(() => {
         makeboard('tutorial-1', 'WB'); // Clear board for new demo
         msg("The goal is to match the reference picture using the pattern repetition.");
+        const patternMsg = document.getElementById("circleInstructions");
+        if (patternMsg) patternMsg.style.border = "3px solid #ffff49";
     }, 14000);
 
     setTimeout(() => tutorialAutoFill(0, 0, 1), 18500);
@@ -311,6 +313,8 @@ function tutorial() {
 
     // --- PHASE 4: Introducing Jumps (39s - 77s) ---
     setTimeout(() => {
+        const patternMsg = document.getElementById("circleInstructions");
+        if (patternMsg) patternMsg.style.border = "none";
         jumps = 1; // Initialize tutorial jump
         makeboard('tutorial-2', 'WB'); // Stuck Layout
         msg("Let us set a different picture. You can never fill all these squares with just the Adjacent Rule.");
