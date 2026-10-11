@@ -15,14 +15,17 @@
 </head>
 <body onload="initialisePage()"> 
 	<div id="replace0"></div>
-	<div id="consent-popup" style="display:none; position:fixed; z-index:9999; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #ccc; padding:20px; box-shadow:0 -2px 8px rgba(0,0,0,0.1);">
-	<span>
-		This site uses Google Analytics to understand how visitors interact. By continuing, you consent to this use. 
-		<a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Learn more</a>.
-	</span>
-	<button id="consent-accept" class="level-button">Accept</button>
-	<button id="consent-reject" class="level-button">Reject</button>
-    	</div>
+	<!-- Inside each game's HTML: keep display: none inline so it is hidden by default -->
+	<div id="consent-popup" style="display: none;">
+		<span>
+			This site uses Google Analytics to understand how visitors interact. 
+			<a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Learn more</a>.
+		</span>
+		<div class="consent-actions">
+			<button id="consent-accept" class="consent-button">Accept</button>
+			<button id="consent-reject" class="consent-button">Reject</button>
+		</div>
+	</div>
 	<div id="gameframe">
 		<div id="replace"></div>
 		<div id="thepictureforimitation"></div>
@@ -31,16 +34,22 @@
 	<div id="instructions"></div>
 	<div id="jumpcount"></div>
 
-	<div id="bar">
-		<label>Our partners:</label>
-		<a class="nav-item" href="https://dyllontjj.wixsite.com/dyta/">
-			<img src="./D.jpg">
-		</a>
-		<a class="nav-item" href="https://myprr.com.my">
-			<img src="./PRR logo.png">
-		</a>
-			
-	</div>
+	<!-- Reusable Partner & Navigation Bar -->
+	<nav id="bar">
+		<div class="bar-left">
+			<span class="bar-title">Our partners:</span>
+			<a class="nav-item" href="https://dyllontjj.wixsite.com/dyta/" target="_blank" rel="noopener">
+				<img src="./D.jpg" alt="Dyta">
+			</a>
+			<a class="nav-item" href="https://myprr.com.my" target="_blank" rel="noopener">
+				<img src="./PRR logo.png" alt="PRR">
+			</a>
+		</div>
+		<div class="bar-right">
+			<!-- Update this link to your main landing page URL if needed -->
+			<a href="https://bndgames.com/" class="nav-link">Main Menu</a>
+		</div>
+	</nav>
 
 
 </body>

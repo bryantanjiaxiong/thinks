@@ -88,81 +88,115 @@ body {
 
 #instructions{font-size: x-large;}
 #jumpcount{font-size: x-large;}
+/* =========================================================
+   UNIVERSAL PARTNER & NAV BAR
+   ========================================================= */
+
+/* Ensure the game canvas/controls don't get covered by the bottom bar */
+body {
+  padding-bottom: 110px !important;
+  box-sizing: border-box;
+}
+
 #bar {
-  bottom: 0;
   position: fixed;
-  background-color: #1a1a24;
-  border-top: 4px solid var(--arcade-gold);
-  color: white;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  height: 15%;
-  min-height: 72px;
-  max-height: 100px;
+  min-height: 84px;
+  background-color: #161822;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
-  flex-wrap: nowrap !important;
   align-items: center;
-  justify-content: flex-start;
-  gap: 16px;
-  padding: 8px 12px;
-  z-index: 9998;
-  transition: background-color 0.3s ease;
-  overflow-x: auto; 
-  white-space: nowrap; 
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch; 
-} 
-
-
-/* Hide the scrollbar for a cleaner look while keeping it scrollable */
-#bar::-webkit-scrollbar {
-    display: none;
+  justify-content: space-between;
+  padding: 12px 32px;
+  box-sizing: border-box;
+  z-index: 99999; /* Keeps it above canvas/gameboard layers */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Removed 0.5 opacity - consistency is key for cognitive accessibility */
-#bar:hover {
-    background-color: #252533;
+#bar .bar-left, 
+#bar .bar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
 }
 
-/* Individual container for icon + label to keep them grouped */
-.nav-item {
-  display: flex;
-  flex-direction: column;
+#bar .bar-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #9ea8b6;
+  white-space: nowrap;
+}
+
+#bar .nav-item {
+  display: inline-flex;
   align-items: center;
-  margin: 6px 12px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+#bar .nav-item:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
 }
 
 #bar img {
-  width: 12vh;
-  height: 12vh;
+  width: 58px;
+  height: 58px;
   object-fit: contain;
-  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
-  transition: transform 0.3s ease-in-out, filter 0.3s ease;
-  margin-left: 0;
+  border-radius: 8px;
+  display: block;
 }
 
-/* When hovering near the button, make it react clearly */
-.nav-item:hover img {
-  transform: scale(1.12);
-  filter: drop-shadow(0 0 10px var(--arcade-gold));
+#bar .nav-link {
+  color: #e2c082;
+  text-decoration: none !important;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(226, 192, 130, 0.35);
+  background-color: transparent;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
 }
 
-#bar > label {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  font-weight: bold;
-  font-size: 3vh;
-  color: #fff;
-  margin: 0 8px 0 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  align-self: center;
-  pointer-events: none;
+#bar .nav-link:hover {
+  background-color: rgba(226, 192, 130, 0.12);
+  color: #f0cf95;
 }
 
-/* Active state: feedback when the button is clicked/pressed */
-.nav-item:active {
-    transform: scale(0.95);
+/* Mobile responsive collapse */
+@media screen and (max-width: 700px) {
+  body {
+    padding-bottom: 140px !important;
+  }
+
+  #bar {
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 14px;
+    min-height: auto;
+  }
+
+  #bar img {
+    width: 46px;
+    height: 46px;
+  }
+
+  #bar .bar-title {
+    font-size: 0.85rem;
+  }
+
+  #bar .nav-link {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
 }
 
 .level-button {border-radius: 2em; width: 120px; height: 40px; background-color: #050610; color: white; border: none; cursor: pointer; margin: 5px; font-size: xx-large;} 
@@ -307,3 +341,80 @@ body {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); } 
 }/*
+
+/* Container: Floating dark card centered above the partner bar */
+#consent-popup {
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  bottom: 100px; /* Sits cleanly above the bottom navigation bar */
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 620px;
+  background-color: #1f232d; /* Calm slate matching the card tone */
+  color: #f5f6f8;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 18px 22px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Learn more link */
+#consent-popup a {
+  color: #e2c082; /* Warm champagne gold */
+  text-decoration: underline;
+}
+
+/* Button layout container */
+.consent-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+/* Shared button foundation */
+.consent-button {
+  border-radius: 8px;
+  padding: 9px 22px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* Accept button: Warm accent gold with dark text */
+#consent-accept {
+  background-color: #e2c082;
+  color: #12141a;
+}
+
+#consent-accept:hover {
+  background-color: #f0cf95;
+}
+
+/* Reject button: Ghost style with subtle border */
+#consent-reject {
+  background-color: transparent;
+  color: #9ea8b6;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+#consent-reject:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #f5f6f8;
+}
+
+/* Responsive adjustment for small mobile screens */
+@media screen and (max-width: 600px) {
+  #consent-popup {
+    bottom: 90px;
+    padding: 14px 16px;
+    font-size: 0.88rem;
+  }
+}
